@@ -3,227 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Christmas Task Reward</title>
+<title>🎅 Free Recharge Offer</title>
 
 <style>
-/* ===== BODY (SCROLL ENABLED) ===== */
-body{
-    margin:0;
-    font-family:Segoe UI, Arial, sans-serif;
-    background:linear-gradient(135deg,#0b6623,#b30000);
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;   /* 🔥 scroll fix */
-    overflow-y:auto;          /* 🔥 scroll bar */
-}
-
-/* ===== MAIN CONTAINER ===== */
-.container{
-    background:#ffffff;
-    max-width:420px;
-    width:94%;
-    padding:22px;
-    margin:40px 0;            /* 🔥 space for scroll */
-    border-radius:20px;
-    box-shadow:0 25px 50px rgba(0,0,0,0.35);
-    text-align:center;
-    position:relative;
-    z-index:2;
-}
-
-/* ===== BANNER ===== */
-.christmas-banner{
-    background:linear-gradient(90deg,#b30000,#0b6623);
-    color:#fff;
-    padding:16px;
-    border-radius:14px;
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:14px;
-}
-.christmas-banner .sub-text{
-    font-size:13px;
-    margin-top:4px;
-    opacity:0.9;
-}
-
-/* ===== CONTENT ===== */
-.offer-box{
-    background:#f6fff8;
-    border:2px dashed #0b6623;
-    padding:14px;
-    border-radius:12px;
-    margin-bottom:12px;
-    font-size:14px;
-}
-input,select{
-    width:100%;
-    padding:12px;
-    margin:8px 0;
-    border-radius:10px;
-    border:1px solid #ccc;
-    font-size:15px;
-}
-button{
-    width:100%;
-    padding:15px;
-    margin-top:10px;
-    border:none;
-    border-radius:30px;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-}
-.taskBtn{
-    background:linear-gradient(90deg,#0b6623,#1fa84f);
-    color:#fff;
-}
-.completeBtn{
-    background:linear-gradient(90deg,#b30000,#ff3b3b);
-    color:#fff;
-    display:none;
-}
-.loading{
-    display:none;
-    margin-top:12px;
-    color:#0b6623;
-    font-weight:bold;
-}
-.note{
-    font-size:12px;
-    color:#666;
-    margin-top:12px;
-}
-
-/* ===== SNOW EFFECT ===== */
-.snow{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-    background-image:
-        radial-gradient(2px 2px at 20px 30px,#fff,transparent),
-        radial-gradient(2px 2px at 40px 70px,#fff,transparent),
-        radial-gradient(2px 2px at 60px 110px,#fff,transparent),
-        radial-gradient(2px 2px at 80px 150px,#fff,transparent);
-    background-size:200px 200px;
-    animation:snowFall 10s linear infinite;
-    opacity:.8;
-    z-index:1;
-}
-@keyframes snowFall{
-    0%{background-position:0 0;}
-    100%{background-position:0 200px;}
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:linear-gradient(135deg,#b31217,#e52d27);color:#fff;overflow-x:hidden}
+header{text-align:center;padding:15px;background:rgba(0,0,0,.35)}
+header h1{text-shadow:0 0 10px gold}
+.hero{text-align:center;padding:20px}
+.santa{font-size:130px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-15px)}100%{transform:translateY(0)}}
+.btn{padding:12px 25px;background:gold;color:#000;border:none;border-radius:30px;font-weight:600;cursor:pointer;margin-top:10px}
+.btn:disabled{background:gray;cursor:not-allowed}
+.recharge-offer{display:flex;justify-content:center;padding:20px}
+.offer-box{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);
+border-radius:20px;padding:25px;max-width:360px;width:100%;text-align:center}
+.offer-box input,.offer-box select{width:100%;padding:12px;margin-top:8px;border:none;border-radius:12px}
+.task-status{margin-top:12px;font-weight:600}
+.popup{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999}
+.popup-box{background:#fff;color:#000;padding:25px;border-radius:15px;text-align:center}
+footer{text-align:center;padding:12px;background:rgba(0,0,0,.35);font-size:14px}
 </style>
 </head>
 
 <body>
 
-<!-- ❄️ Snow -->
-<div class="snow"></div>
+<header>
+<h1>🎄 Santa Free Recharge 🎄</h1>
+</header>
 
-<div class="container">
+<section class="hero">
+<div class="santa">🎅</div>
+<h2>Free Mobile Recharge</h2>
+<p>Santa दे रहा है FREE Recharge 🎁<br>बस 2 Tax complete करो</p>
+</section>
 
-    <div class="christmas-banner">
-        🎄 Christmas Task Reward 🎁
-        <div class="sub-text">Complete Festive Task & Get Verified</div>
-    </div>
+<section class="recharge-offer">
+<div class="offer-box">
+<h3>🎁 Claim Recharge</h3>
 
-    <!-- 🔴 TOP NATIVE AD -->
-    <script async data-cfasync="false"
-        src="https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js"></script>
-    <div id="container-ed0499a255f96083e92a9524840692b6"></div>
+<input type="number" id="mobile" placeholder="📱 Mobile Number">
+<select id="operator">
+<option value="">Select Operator</option>
+<option>Jio</option>
+<option>Airtel</option>
+<option>VI</option>
+<option>BSNL</option>
+</select>
+<select id="amount">
+<option value="">Recharge Amount</option>
+<option>₹199</option>
+<option>₹299</option>
+<option>₹399</option>
+<option>₹499</option>
+</select>
 
-    <div class="offer-box">
-        🎁 Step 1: Partner site पर task करें<br>
-        🎅 Step 2: 30 सेकंड बाद confirm करें
-    </div>
+<button class="btn" onclick="startTask()">🚀 Get Free Recharge</button>
 
-    <input type="tel" id="mobile" placeholder="📱 मोबाइल नंबर डालें" maxlength="10">
-    <select id="plan">
-        <option value="">🎁 Reward Plan चुनें</option>
-        <option>₹99</option>
-        <option>₹199</option>
-        <option>₹299</option>
-    </select>
+<p class="task-status" id="status">🔒 Tax Pending</p>
 
-    <!-- 🟡 MIDDLE NATIVE AD -->
-    <script async data-cfasync="false"
-        src="https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js"></script>
-    <div id="container-ed0499a255f96083e92a9524840692b6"></div>
+<!-- TAX 1 : WhatsApp -->
+<a id="shareBtn" class="btn" style="display:none"
+href="https://wa.me/?text=🎅%20Free%20Recharge%20Offer%20🔥%0AClaim%20Now👇%0Ahttps://indianclub11club.github.io/Santa-offer-/"
+target="_blank" onclick="tax1Done()">
+📲 WhatsApp Share (Tax-1)
+</a>
 
-    <button class="taskBtn" id="taskBtn" onclick="openTask()">
-        🎅 Do Task on 6Gain
-    </button>
+<!-- TAX 2 : Register -->
+<button id="tax2Btn" class="btn" style="display:none" onclick="tax2Done()">
+🧾 Register (Tax-2)
+</button>
 
-    <button class="completeBtn" id="completeBtn" onclick="taskDone()">
-        🎄 Task Completed
-    </button>
+<button id="finalBtn" class="btn" style="display:none" onclick="openPopup()">
+✅ Recharge Process
+</button>
 
-    <div class="loading" id="loading">
-        ⏳ Verifying your task...
-    </div>
+</div>
+</section>
 
-    <!-- 🔵 BOTTOM NATIVE AD -->
-    <script async data-cfasync="false"
-        src="https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js"></script>
-    <div id="container-ed0499a255f96083e92a9524840692b6"></div>
-
-    <div class="note">
-        ⚠️ Task click करने के 30 सेकंड बाद ही confirm button आएगा
-    </div>
+<!-- 🔥 Ppundar Ads Section -->
+<div style="text-align:center;margin:15px 0;">
+<script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
 </div>
 
+<!-- Popup -->
+<div class="popup" id="popup">
+<div class="popup-box">
+<h3>🎉 All Tax Complete</h3>
+<p>Recharge processing में है ⏳<br>
+24 घंटे में recharge मिल जाएगा 🎁</p>
+
+<!-- Ppundar Ad inside popup (High CTR) -->
+<hr style="margin:10px 0">
+<script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
+
+<button class="btn" onclick="closePopup()">OK</button>
+</div>
+</div>
+
+<footer>
+© 2025 Santa Recharge | Made with ❤️
+</footer>
+
 <script>
-function openTask(){
-    window.open("https://6gain.com/in/#/?rcode=Ijjnfq","_blank");
-
-    const taskBtn = document.getElementById("taskBtn");
-    const completeBtn = document.getElementById("completeBtn");
-
-    taskBtn.disabled = true;
-    taskBtn.innerText = "⏳ Please wait 30 seconds...";
-
-    setTimeout(()=>{
-        completeBtn.style.display = "block";
-        taskBtn.innerText = "✅ Task Clicked";
-    },30000);
+function startTask(){
+let m=mobile.value,o=operator.value,a=amount.value;
+if(m.length<10||o===""||a===""){
+alert("❌ Complete details bharo");
+return;
+}
+status.innerText="📲 WhatsApp Share Required (Tax-1)";
+shareBtn.style.display="inline-block";
 }
 
-function taskDone(){
-    const mobile = document.getElementById("mobile").value;
-    const plan = document.getElementById("plan").value;
+function tax1Done(){
+localStorage.setItem("tax1","yes");
+setTimeout(()=>{
+status.innerText="🧾 Register Required (Tax-2)";
+tax2Btn.style.display="inline-block";
+},1500);
+}
 
-    if(mobile.length !== 10){ alert("सही मोबाइल नंबर डालें"); return; }
-    if(plan === ""){ alert("Reward plan चुनें"); return; }
+function tax2Done(){
+window.open("https://6gain.com/in/#/?rcode=Ijjnfq","_blank");
+setTimeout(()=>{
+localStorage.setItem("tax2","yes");
+status.innerText="🎉 All Tax Complete!";
+finalBtn.style.display="inline-block";
+},4000);
+}
 
-    document.getElementById("loading").style.display = "block";
+function openPopup(){popup.style.display="flex"}
+function closePopup(){popup.style.display="none"}
 
-    setTimeout(()=>{
-        alert(
-            "🎉 Merry Christmas!\n\n" +
-            "Task Verified Successfully ✅\n" +
-            "🎁 Reward 24 घंटे में complete होगा"
-        );
-
-        /* 🚀 SMART LINK */
-        setTimeout(()=>{
-            window.open(
-                "https://www.effectivegatecpm.com/rdpsc1ap?key=04cfcd1d345b5b9493da19f4320c51ba",
-                "_blank"
-            );
-        },1200);
-
-    },2000);
+// Persist after reload
+if(localStorage.getItem("tax1")==="yes"){
+shareBtn.style.display="inline-block";
+tax2Btn.style.display="inline-block";
+}
+if(localStorage.getItem("tax2")==="yes"){
+finalBtn.style.display="inline-block";
+status.innerText="🎉 All Tax Complete!";
 }
 </script>
-
-<!-- 🔔 POPUNDER ADS -->
-<script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
 
 </body>
 </html>
