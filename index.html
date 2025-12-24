@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christmas Task Reward</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI, Arial, sans-serif;
+    background:linear-gradient(135deg,#0b6623,#b30000);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+.container{
+    background:#ffffff;
+    max-width:420px;
+    width:94%;
+    padding:22px;
+    border-radius:20px;
+    box-shadow:0 25px 50px rgba(0,0,0,0.35);
+    text-align:center;
+    position:relative;
+    z-index:2;
+}
+.christmas-banner{
+    background:linear-gradient(90deg,#b30000,#0b6623);
+    color:#fff;
+    padding:16px;
+    border-radius:14px;
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:14px;
+}
+.christmas-banner .sub-text{
+    font-size:13px;
+    margin-top:4px;
+    opacity:0.9;
+}
+.offer-box{
+    background:#f6fff8;
+    border:2px dashed #0b6623;
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:12px;
+    font-size:14px;
+}
+input,select{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+    font-size:15px;
+}
+button{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+.taskBtn{
+    background:linear-gradient(90deg,#0b6623,#1fa84f);
+    color:#fff;
+}
+.completeBtn{
+    background:linear-gradient(90deg,#b30000,#ff3b3b);
+    color:#fff;
+    display:none;
+}
+.loading{
+    display:none;
+    margin-top:12px;
+    color:#0b6623;
+    font-weight:bold;
+}
+.note{
+    font-size:12px;
+    color:#666;
+    margin-top:12px;
+}
+
+/* ❄️ Snow Effect */
+.snow{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px,#fff,transparent),
+        radial-gradient(2px 2px at 40px 70px,#fff,transparent),
+        radial-gradient(2px 2px at 60px 110px,#fff,transparent),
+        radial-gradient(2px 2px at 80px 150px,#fff,transparent);
+    background-size:200px 200px;
+    animation:snowFall 10s linear infinite;
+    opacity:.8;
+    z-index:1;
+}
+@keyframes snowFall{
+    0%{background-position:0 0;}
+    100%{background-position:0 200px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="snow"></div>
+
+<div class="container">
+
+    <div class="christmas-banner">
+        🎄 Christmas Task Reward 🎁
+        <div class="sub-text">Complete Festive Task & Get Verified</div>
+    </div>
+
+    <!-- 🔴 TOP NATIVE AD -->
+    <script async data-cfasync="false"
+        src="https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js"></script>
+    <div id="container-ed0499a255f96083e92a9524840692b6"></div>
+
+    <div class="offer-box">
+        🎁 Step 1: Partner site पर task करें<br>
+        🎅 Step 2: 30 सेकंड बाद confirm करें
+    </div>
+
+    <input type="tel" id="mobile" placeholder="📱 मोबाइल नंबर डालें" maxlength="10">
+    <select id="plan">
+        <option value="">🎁 Reward Plan चुनें</option>
+        <option>₹99</option>
+        <option>₹199</option>
+        <option>₹299</option>
+    </select>
+
+    <!-- 🟡 MIDDLE NATIVE AD -->
+    <script async data-cfasync="false"
+        src="https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js"></script>
+    <div id="container-ed0499a255f96083e92a9524840692b6"></div>
+
+    <button class="taskBtn" id="taskBtn" onclick="openTask()">
+        🎅 Do Task on 6Gain
+    </button>
+
+    <button class="completeBtn" id="completeBtn" onclick="taskDone()">
+        🎄 Task Completed
+    </button>
+
+    <div class="loading" id="loading">
+        ⏳ Verifying your task...
+    </div>
+
+    <!-- 🔵 BOTTOM NATIVE AD -->
+    <script async data-cfasync="false"
+        src="https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js"></script>
+    <div id="container-ed0499a255f96083e92a9524840692b6"></div>
+
+    <div class="note">
+        ⚠️ Task click करने के 30 सेकंड बाद ही confirm button आएगा
+    </div>
+</div>
+
+<script>
+function openTask(){
+    window.open("https://6gain.com/in/#/?rcode=Ijjnfq","_blank");
+
+    const taskBtn = document.getElementById("taskBtn");
+    const completeBtn = document.getElementById("completeBtn");
+
+    taskBtn.disabled = true;
+    taskBtn.innerText = "⏳ Please wait 30 seconds...";
+
+    setTimeout(function(){
+        completeBtn.style.display = "block";
+        taskBtn.innerText = "✅ Task Clicked";
+    },30000);
+}
+
+function taskDone(){
+    const mobile = document.getElementById("mobile").value;
+    const plan = document.getElementById("plan").value;
+
+    if(mobile.length !== 10){
+        alert("सही मोबाइल नंबर डालें");
+        return;
+    }
+    if(plan === ""){
+        alert("Reward plan चुनें");
+        return;
+    }
+
+    document.getElementById("loading").style.display = "block";
+
+    setTimeout(function(){
+        alert(
+            "🎉 Merry Christmas!\n\n" +
+            "Task Verified Successfully ✅\n" +
+            "🎁 Reward 24 घंटे में complete होगा"
+        );
+
+        /* 🚀 SMART LINK – success ke baad */
+        setTimeout(function(){
+            window.open(
+                "https://www.effectivegatecpm.com/rdpsc1ap?key=04cfcd1d345b5b9493da19f4320c51ba",
+                "_blank"
+            );
+        },1200);
+
+    },2000);
+}
+</script>
+
+<!-- 🔔 POPUNDER ADS -->
+<script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
+
+</body>
+  </html>
