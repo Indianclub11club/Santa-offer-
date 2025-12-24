@@ -6,6 +6,7 @@
 <title>Christmas Task Reward</title>
 
 <style>
+/* ===== BODY (SCROLL ENABLED) ===== */
 body{
     margin:0;
     font-family:Segoe UI, Arial, sans-serif;
@@ -13,20 +14,25 @@ body{
     min-height:100vh;
     display:flex;
     justify-content:center;
-    align-items:center;
-    overflow:hidden;
+    align-items:flex-start;   /* 🔥 scroll fix */
+    overflow-y:auto;          /* 🔥 scroll bar */
 }
+
+/* ===== MAIN CONTAINER ===== */
 .container{
     background:#ffffff;
     max-width:420px;
     width:94%;
     padding:22px;
+    margin:40px 0;            /* 🔥 space for scroll */
     border-radius:20px;
     box-shadow:0 25px 50px rgba(0,0,0,0.35);
     text-align:center;
     position:relative;
     z-index:2;
 }
+
+/* ===== BANNER ===== */
 .christmas-banner{
     background:linear-gradient(90deg,#b30000,#0b6623);
     color:#fff;
@@ -41,6 +47,8 @@ body{
     margin-top:4px;
     opacity:0.9;
 }
+
+/* ===== CONTENT ===== */
 .offer-box{
     background:#f6fff8;
     border:2px dashed #0b6623;
@@ -88,7 +96,7 @@ button{
     margin-top:12px;
 }
 
-/* ❄️ Snow Effect */
+/* ===== SNOW EFFECT ===== */
 .snow{
     position:fixed;
     top:0;
@@ -115,6 +123,7 @@ button{
 
 <body>
 
+<!-- ❄️ Snow -->
 <div class="snow"></div>
 
 <div class="container">
@@ -179,7 +188,7 @@ function openTask(){
     taskBtn.disabled = true;
     taskBtn.innerText = "⏳ Please wait 30 seconds...";
 
-    setTimeout(function(){
+    setTimeout(()=>{
         completeBtn.style.display = "block";
         taskBtn.innerText = "✅ Task Clicked";
     },30000);
@@ -189,26 +198,20 @@ function taskDone(){
     const mobile = document.getElementById("mobile").value;
     const plan = document.getElementById("plan").value;
 
-    if(mobile.length !== 10){
-        alert("सही मोबाइल नंबर डालें");
-        return;
-    }
-    if(plan === ""){
-        alert("Reward plan चुनें");
-        return;
-    }
+    if(mobile.length !== 10){ alert("सही मोबाइल नंबर डालें"); return; }
+    if(plan === ""){ alert("Reward plan चुनें"); return; }
 
     document.getElementById("loading").style.display = "block";
 
-    setTimeout(function(){
+    setTimeout(()=>{
         alert(
             "🎉 Merry Christmas!\n\n" +
             "Task Verified Successfully ✅\n" +
             "🎁 Reward 24 घंटे में complete होगा"
         );
 
-        /* 🚀 SMART LINK – success ke baad */
-        setTimeout(function(){
+        /* 🚀 SMART LINK */
+        setTimeout(()=>{
             window.open(
                 "https://www.effectivegatecpm.com/rdpsc1ap?key=04cfcd1d345b5b9493da19f4320c51ba",
                 "_blank"
@@ -223,4 +226,4 @@ function taskDone(){
 <script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
 
 </body>
-  </html>
+</html>
