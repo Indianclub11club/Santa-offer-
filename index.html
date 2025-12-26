@@ -1,151 +1,260 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎅 Free Recharge Offer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 2026 New Year Special - 1000 Free Followers</title>
+    
+    <!-- Popunder Ad Script -->
+    <script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-body{background:linear-gradient(135deg,#b31217,#e52d27);color:#fff;overflow-x:hidden}
-header{text-align:center;padding:15px;background:rgba(0,0,0,.35)}
-header h1{text-shadow:0 0 10px gold}
-.hero{text-align:center;padding:20px}
-.santa{font-size:130px;animation:float 3s ease-in-out infinite}
-@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-15px)}100%{transform:translateY(0)}}
-.btn{padding:12px 25px;background:gold;color:#000;border:none;border-radius:30px;font-weight:600;cursor:pointer;margin-top:10px}
-.btn:disabled{background:gray;cursor:not-allowed}
-.recharge-offer{display:flex;justify-content:center;padding:20px}
-.offer-box{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);
-border-radius:20px;padding:25px;max-width:360px;width:100%;text-align:center}
-.offer-box input,.offer-box select{width:100%;padding:12px;margin-top:8px;border:none;border-radius:12px}
-.task-status{margin-top:12px;font-weight:600}
-.popup{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999}
-.popup-box{background:#fff;color:#000;padding:25px;border-radius:15px;text-align:center}
-footer{text-align:center;padding:12px;background:rgba(0,0,0,.35);font-size:14px}
-</style>
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold: #ffd700; --neon-blue: #00f2fe; --dark-bg: #050505; --card-bg: #111111; --success: #25D366; --danger: #ff4d4d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--dark-bg); color: white; overflow-x: hidden; user-select: none; }
+
+        /* --- VPN GATE UI --- */
+        #vpn-gate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark-bg); z-index: 99999;
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+        .vpn-box {
+            max-width: 400px; width: 100%; text-align: center; padding: 35px;
+            background: var(--card-bg); border-radius: 25px; border: 1px solid #222;
+            box-shadow: 0 0 50px rgba(0,0,0,1); animation: fadeIn 0.8s ease-out;
+        }
+        .shield-icon { font-size: 5rem; color: var(--neon-blue); filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.4)); margin-bottom: 25px; animation: pulse 2s infinite; }
+        .btn-vpn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; margin-bottom: 12px; text-transform: uppercase; }
+        .btn-connect { background: linear-gradient(45deg, #6366f1, #a855f7); color: white; }
+        .btn-recheck { background: transparent; color: white; border: 1px solid #333; }
+
+        /* --- MAIN APP UI --- */
+        #main-app { display: none; opacity: 0; transition: 1s ease; max-width: 480px; margin: 0 auto; padding: 15px; }
+        .hero h1 { font-size: 2.2rem; font-weight: 800; text-align: center; background: linear-gradient(to right, var(--gold), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 20px; }
+        .hero p { color: var(--neon-blue); text-align: center; font-weight: 600; font-size: 0.9rem; }
+        #timer { background: rgba(255, 215, 0, 0.05); padding: 10px; border-radius: 10px; margin: 15px 0; border: 1px dashed var(--gold); text-align: center; font-weight: bold; }
+        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid #222; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        input, select { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #000; color: white; outline: none; }
+        label { font-size: 0.8rem; color: var(--gold); margin-top: 5px; display: block; text-align: left; }
+        .btn-main { width: 100%; padding: 16px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; font-size: 1rem; background: linear-gradient(45deg, var(--gold), #f9e29c); color: #000; box-shadow: 0 5px 15px rgba(212,175,55,0.4); text-transform: uppercase; }
+        .btn-whatsapp { background: var(--success); color: white; margin-top: 15px; }
+        .bar-container { background: #222; height: 16px; border-radius: 10px; overflow: hidden; margin: 15px 0; border: 1px solid #333; }
+        .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--neon-blue), var(--gold)); transition: 0.5s; }
+
+        /* --- POPUPS --- */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; }
+        .popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #111; width: 90%; max-width: 400px; padding: 35px; border-radius: 25px; border: 2px solid var(--gold); text-align: center; z-index: 10001; }
+        #ad-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #111; width: 85%; max-width: 350px; padding: 25px; border-radius: 20px; border: 2px solid var(--neon-blue); text-align: center; z-index: 10005; }
+
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .loader { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--neon-blue); border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
-
 <body>
 
-<header>
-<h1>🎄 Santa Free Recharge 🎄</h1>
-</header>
+    <!-- VPN SCREEN -->
+    <div id="vpn-gate">
+        <div class="vpn-box" id="vpn-ui">
+            <i class="fas fa-shield-alt shield-icon" id="lock-icon"></i>
+            <h1>🔐 Access Locked</h1>
+            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 20px;">Safety Protocol Active. Connect to a VPN (USA/UK Server) to access the 2026 Reward Portal.</p>
+            <button class="btn-vpn btn-connect" onclick="showVpnHelp()"><i class="fas fa-link"></i> CONNECT VPN</button>
+            <button class="btn-vpn btn-recheck" onclick="verifyVPN_Dual()" id="check-btn"><i class="fas fa-sync-alt"></i> RECHECK STATUS</button>
+            <div id="vpn-status" style="color: var(--danger); font-size: 0.85rem; font-weight: bold; margin-top: 10px;">Status: VPN Not Connected 🔴</div>
+        </div>
+    </div>
 
-<section class="hero">
-<div class="santa">🎅</div>
-<h2>Free Mobile Recharge</h2>
-<p>Santa दे रहा है FREE Recharge 🎁<br>बस 2 Tax complete करो</p>
-</section>
+    <!-- MAIN APP -->
+    <div id="main-app">
+        <div class="hero">
+            <h1>🎉 New Year 2026</h1>
+            <p>1000 Free Followers Campaign</p>
+            <div id="timer">Offer Ends In: <span id="clock">12:00:00</span></div>
+        </div>
 
-<section class="recharge-offer">
-<div class="offer-box">
-<h3>🎁 Claim Recharge</h3>
+        <div id="step-1" class="card">
+            <h3 style="color: var(--gold); margin-bottom: 10px;">User Information</h3>
+            
+            <label>Select Platform</label>
+            <select id="platform">
+                <option value="Instagram">Instagram Followers</option>
+                <option value="YouTube">YouTube Subscribers</option>
+                <option value="Telegram">Telegram Members</option>
+            </select>
 
-<input type="number" id="mobile" placeholder="📱 Mobile Number">
-<select id="operator">
-<option value="">Select Operator</option>
-<option>Jio</option>
-<option>Airtel</option>
-<option>VI</option>
-<option>BSNL</option>
-</select>
-<select id="amount">
-<option value="">Recharge Amount</option>
-<option>₹199</option>
-<option>₹299</option>
-<option>₹399</option>
-<option>₹499</option>
-</select>
+            <label>Target Username</label>
+            <input type="text" id="username" placeholder="e.g. @your_name">
 
-<button class="btn" onclick="startTask()">🚀 Get Free Recharge</button>
+            <label>Select Your State</label>
+            <select id="user-state">
+                <option value="">Select State</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Bihar">Bihar</option>
+                <option value="West Bengal">West Bengal</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Other">Other</option>
+            </select>
 
-<p class="task-status" id="status">🔒 Tax Pending</p>
+            <button class="btn-main" onclick="nextStep()" style="margin-top:10px;">PROCEED TO CLAIM</button>
+        </div>
 
-<!-- TAX 1 : WhatsApp -->
-<a id="shareBtn" class="btn" style="display:none"
-href="https://wa.me/?text=🎅%20Free%20Recharge%20Offer%20🔥%0AClaim%20Now👇%0Ahttps://indianclub11club.github.io/Santa-offer-/"
-target="_blank" onclick="tax1Done()">
-📲 WhatsApp Share (Tax-1)
-</a>
+        <div id="step-2" class="card" style="display: none;">
+            <h3 style="color: var(--neon-blue);">Final Verification</h3>
+            <p style="font-size: 0.8rem; margin: 10px 0; color: #ccc;">Share this offer with 10 friends on WhatsApp to activate your followers!</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: bold;">
+                <span>Progress</span> <span id="progress-text">0 / 10</span>
+            </div>
+            <div class="bar-container"><div class="bar-fill" id="progress-bar"></div></div>
+            <button class="btn-main btn-whatsapp" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i> SHARE ON WHATSAPP</button>
+            <button id="claim-btn" class="btn-main" style="margin-top: 20px; opacity: 0.3;" disabled onclick="showSuccess()">ACTIVATE FOLLOWERS</button>
+        </div>
+    </div>
 
-<!-- TAX 2 : Register -->
-<button id="tax2Btn" class="btn" style="display:none" onclick="tax2Done()">
-🧾 Register (Tax-2)
-</button>
+    <!-- AD POPUP -->
+    <div class="overlay" id="ad-overlay"></div>
+    <div id="ad-box">
+        <h3 style="color: var(--gold);">Security Check <span id="ad-step-num">3</span></h3>
+        <p style="font-size: 0.8rem; margin: 15px 0; color: #ccc;">Click the button below to verify your session and continue.</p>
+        <button class="btn-main" style="background: var(--neon-blue);" onclick="openAdLink()">VERIFY NOW</button>
+    </div>
 
-<button id="finalBtn" class="btn" style="display:none" onclick="openPopup()">
-✅ Recharge Process
-</button>
+    <!-- SUCCESS POPUP -->
+    <div class="overlay" id="final-overlay"></div>
+    <div class="popup" id="popup">
+        <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success); margin-bottom: 15px;"></i>
+        <h2 style="color: var(--gold);">Success!</h2>
+        <p style="margin: 15px 0; font-size: 0.9rem;">The followers for <b><span id="target-user"></span></b> (<span id="target-platform"></span>) are being processed.</p>
+        <button class="btn-main" style="margin-top: 20px;" onclick="location.reload()">DONE</button>
+    </div>
 
-</div>
-</section>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-<!-- 🔥 Ppundar Ads Section -->
-<div style="text-align:center;margin:15px 0;">
-<script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
-</div>
+    <script>
+        let shareCount = parseInt(localStorage.getItem('shares_v6_2026')) || 0;
+        let lastAttempt = 0;
+        const smartAdLink = "https://www.effectivegatecpm.com/rdpsc1ap?key=04cfcd1d345b5b9493da19f4320c51ba";
 
-<!-- Popup -->
-<div class="popup" id="popup">
-<div class="popup-box">
-<h3>🎉 All Tax Complete</h3>
-<p>Recharge processing में है ⏳<br>
-24 घंटे में recharge मिल जाएगा 🎁</p>
+        function showVpnHelp() { alert('1. Open VPN app.\n2. Connect to USA/Singapore.\n3. Return and click Recheck.'); }
 
-<!-- Ppundar Ad inside popup (High CTR) -->
-<hr style="margin:10px 0">
-<script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
+        // --- 🛡️ DUAL-API VPN DETECTION LOGIC ---
+        async function verifyVPN_Dual() {
+            const btn = document.getElementById('check-btn');
+            const status = document.getElementById('vpn-status');
+            btn.innerHTML = `<span class="loader"></span> Scanning...`;
+            btn.disabled = true;
 
-<button class="btn" onclick="closePopup()">OK</button>
-</div>
-</div>
+            // API 1: ipwho.is
+            try {
+                const res1 = await fetch('https://ipwho.is/');
+                const data1 = await res1.json();
+                if (data1.security.proxy || data1.connection.type === "hosting" || data1.country_code !== "IN") {
+                    return unlockPortal();
+                }
+                throw new Error("API 1 Fail");
+            } catch (err) {
+                // API 2: ipapi.co (Fallback)
+                try {
+                    const res2 = await fetch('https://ipapi.co/json/');
+                    const data2 = await res2.json();
+                    const vpnKeywords = ["m247", "hosting", "proxy", "vpn", "akamai", "logicweb"];
+                    const isVpnIsp = vpnKeywords.some(key => (data2.org || "").toLowerCase().includes(key));
+                    if (data2.country_code !== "IN" || isVpnIsp) {
+                        return unlockPortal();
+                    }
+                } catch (err2) {}
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fas fa-sync-alt"></i> RECHECK STATUS`;
+            status.innerText = "🔴 VPN Not Detected (Dual Check Failed)";
+        }
 
-<footer>
-© 2025 Santa Recharge | Made with ❤️
-</footer>
+        function unlockPortal() {
+            document.getElementById('vpn-status').innerText = "✅ VPN Detected!";
+            document.getElementById('vpn-status').style.color = "var(--success)";
+            setTimeout(() => {
+                document.getElementById('vpn-gate').style.display = "none";
+                document.getElementById('main-app').style.display = "block";
+                setTimeout(() => document.getElementById('main-app').style.opacity = "1", 50);
+            }, 1000);
+        }
 
-<script>
-function startTask(){
-let m=mobile.value,o=operator.value,a=amount.value;
-if(m.length<10||o===""||a===""){
-alert("❌ Complete details bharo");
-return;
-}
-status.innerText="📲 WhatsApp Share Required (Tax-1)";
-shareBtn.style.display="inline-block";
-}
+        function nextStep() {
+            const user = document.getElementById('username').value;
+            const state = document.getElementById('user-state').value;
+            if(user.length < 3 || state === "") { alert("Please fill all details correctly."); return; }
+            document.getElementById('step-1').style.display = "none";
+            document.getElementById('step-2').style.display = "block";
+            updateUI();
+        }
 
-function tax1Done(){
-localStorage.setItem("tax1","yes");
-setTimeout(()=>{
-status.innerText="🧾 Register Required (Tax-2)";
-tax2Btn.style.display="inline-block";
-},1500);
-}
+        function shareWhatsApp() {
+            const msg = encodeURIComponent("🎉 New Year 2026 Free 1000 Followers Offer!\nClaim here 👇\n" + window.location.href);
+            lastAttempt = Date.now();
+            window.location.href = "whatsapp://send?text=" + msg;
+            const checkReturn = () => {
+                if (document.visibilityState === 'visible') {
+                    if ((Date.now() - lastAttempt) / 1000 > 4) {
+                        if(shareCount < 10) {
+                            shareCount++;
+                            localStorage.setItem('shares_v6_2026', shareCount);
+                            if ([3, 6, 9].includes(shareCount)) {
+                                document.getElementById('ad-overlay').style.display = "block";
+                                document.getElementById('ad-box').style.display = "block";
+                            } else { updateUI(); }
+                        }
+                    }
+                    document.removeEventListener("visibilitychange", checkReturn);
+                }
+            };
+            document.addEventListener("visibilitychange", checkReturn);
+        }
 
-function tax2Done(){
-window.open("https://6gain.com/in/#/?rcode=Ijjnfq","_blank");
-setTimeout(()=>{
-localStorage.setItem("tax2","yes");
-status.innerText="🎉 All Tax Complete!";
-finalBtn.style.display="inline-block";
-},4000);
-}
+        function openAdLink() {
+            window.open(smartAdLink, '_blank');
+            document.getElementById('ad-overlay').style.display = "none";
+            document.getElementById('ad-box').style.display = "none";
+            updateUI();
+        }
 
-function openPopup(){popup.style.display="flex"}
-function closePopup(){popup.style.display="none"}
+        function updateUI() {
+            const cur = shareCount > 10 ? 10 : shareCount;
+            document.getElementById('progress-bar').style.width = (cur * 10) + "%";
+            document.getElementById('progress-text').innerText = `${cur} / 10`;
+            if(shareCount >= 10) {
+                const b = document.getElementById('claim-btn');
+                b.disabled = false; b.style.opacity = "1";
+            }
+        }
 
-// Persist after reload
-if(localStorage.getItem("tax1")==="yes"){
-shareBtn.style.display="inline-block";
-tax2Btn.style.display="inline-block";
-}
-if(localStorage.getItem("tax2")==="yes"){
-finalBtn.style.display="inline-block";
-status.innerText="🎉 All Tax Complete!";
-}
-</script>
+        function showSuccess() {
+            document.getElementById('target-user').innerText = document.getElementById('username').value;
+            document.getElementById('target-platform').innerText = document.getElementById('platform').value;
+            window.open(smartAdLink, '_blank');
+            document.getElementById('final-overlay').style.display = "block";
+            document.getElementById('popup').style.display = "block";
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        }
 
+        setInterval(() => {
+            const n = new Date();
+            document.getElementById('clock').innerText = `${23-n.getHours()}h ${59-n.getMinutes()}m ${59-n.getSeconds()}s`;
+        }, 1000);
+    </script>
 </body>
-</html>
+  </html>
