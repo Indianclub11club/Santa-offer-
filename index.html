@@ -1,58 +1,44 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
+    <!-- 1. POPUNDER SCRIPT (Head के सबसे ऊपर) -->
+    <script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI New Year 2026 - जादुई शुभकामनायें</title>
     
-    <!-- ✅ ADS POPUNDER SCRIPT -->
-    <script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
         :root { --primary: #ff1177; --secondary: #ffcc00; --dark-bg: #0b0e14; --glass: rgba(255, 255, 255, 0.08); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Hind', sans-serif; -webkit-tap-highlight-color: transparent; }
-        
         body { background: radial-gradient(circle at top, #1a1a2e, #0b0e14); color: white; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
-        
         .ad-slot { width: 320px; height: 50px; margin: 10px auto; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); border: 1px solid #333; overflow: hidden; }
-
         #timer-wrap { display: flex; gap: 8px; margin: 15px 0; background: var(--glass); padding: 10px 20px; border-radius: 50px; border: 1px solid var(--secondary); box-shadow: 0 0 15px rgba(255, 204, 0, 0.2); }
         .t-box { text-align: center; min-width: 45px; }
         .t-box span { display: block; font-size: 1.2rem; font-weight: 800; color: var(--secondary); }
         .t-box label { font-size: 0.6rem; opacity: 0.8; }
-
         .card { width: 92%; max-width: 420px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border-radius: 30px; padding: 25px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.5); margin-top: 10px; text-align: center; }
         h1 { font-size: 1.5rem; margin-bottom: 20px; background: linear-gradient(to right, #fff, var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
         input, select { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 15px; border: 1px solid #444; background: #fff; color: #000; font-size: 1rem; font-weight: 600; outline: none; }
-        
         .btn-gen { width: 100%; padding: 16px; background: linear-gradient(45deg, var(--primary), #ff5500); color: white; border: none; border-radius: 15px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 20px rgba(255, 17, 119, 0.4); }
-
         #output-screen { display: none; }
-        .wish-display { background: rgba(255,255,255,0.07); padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 5px solid var(--secondary); text-align: left; position: relative; animation: slideIn 0.5s ease; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
+        .wish-display { background: rgba(255,255,255,0.07); padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 5px solid var(--secondary); text-align: left; position: relative; }
         .ai-badge { position: absolute; top: -10px; right: 10px; background: var(--secondary); color: #000; font-size: 0.6rem; font-weight: 800; padding: 2px 8px; border-radius: 10px; }
-        .regen-btn { display: block; margin: 10px auto; background: none; border: 1px solid var(--secondary); color: var(--secondary); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: 700; }
-
         .p-bar-bg { width: 100%; height: 15px; background: #222; border-radius: 10px; margin: 10px 0; overflow: hidden; }
         .p-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #00f2fe, #4facfe); transition: 0.5s; }
-        
-        .btn-wa { background: #25D366; color: white; padding: 16px; width: 100%; border-radius: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 700; margin-top: 15px; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+        .btn-wa { background: #25D366; color: white; padding: 16px; width: 100%; border-radius: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 700; margin-top: 15px; }
         .btn-wa.disabled { background: #555; pointer-events: none; opacity: 0.6; }
-        #cooldown { font-size: 0.8rem; color: #ff4d4d; margin-top: 8px; font-weight: 700; }
-
-        .lvl { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; margin-top: 10px; border: 1px solid #333; filter: blur(4px); opacity: 0.5; transition: 0.5s; font-size: 0.85rem; }
-        .lvl.active { filter: blur(0); opacity: 1; border-color: var(--secondary); background: rgba(255,204,0,0.05); }
-
+        .lvl { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; margin-top: 10px; border: 1px solid #333; filter: blur(4px); opacity: 0.5; font-size: 0.85rem; }
+        .lvl.active { filter: blur(0); opacity: 1; border-color: var(--secondary); }
         footer { margin-top: 30px; font-size: 0.7rem; opacity: 0.5; text-align: center; padding: 20px; }
     </style>
 </head>
-<body>
+<body onclick="void(0)"> <!-- Void(0) helps mobile click detection -->
 
-    <!-- AD TOP -->
+    <!-- BANNER AD TOP -->
     <div class="ad-slot">
         <script type="text/javascript">
             atOptions = { 'key' : '31853b4e2d4b39a61cfde0a3550d6128', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
@@ -60,7 +46,6 @@
         <script type="text/javascript" src="https://www.highperformanceformat.com/31853b4e2d4b39a61cfde0a3550d6128/invoke.js"></script>
     </div>
 
-    <!-- Countdown -->
     <div id="timer-wrap">
         <div class="t-box"><span id="d">00</span><label>दिन</label></div>
         <div class="t-box"><span id="h">00</span><label>घंटे</label></div>
@@ -79,7 +64,7 @@
                 <option value="friend">🤝 दोस्ती (Friendship)</option>
                 <option value="family">👨‍👩‍👧 परिवार (Family)</option>
             </select>
-            <button class="btn-gen" onclick="initAI()">जादुई विश बनायें 🪄</button>
+            <button class="btn-gen" onclick="initAI()">बधाई संदेश बनायें 🪄</button>
         </div>
 
         <div id="output-screen">
@@ -88,9 +73,9 @@
                 <span class="ai-badge">AI GENERATED</span>
                 <p id="aiWishText" style="font-weight:600; line-height:1.6;"></p>
             </div>
-            <button class="regen-btn" onclick="generateAIWish()">विश बदलें (New AI Wish) 🔄</button>
+            <button style="background:none; border:1px solid var(--secondary); color:var(--secondary); padding:5px 15px; border-radius:20px; font-size:0.8rem; cursor:pointer;" onclick="generateAIWish()">🔄 नया जनरेट करें</button>
 
-            <!-- AD MIDDLE -->
+            <!-- BANNER AD MIDDLE -->
             <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = { 'key' : '31853b4e2d4b39a61cfde0a3550d6128', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
@@ -99,13 +84,104 @@
             </div>
 
             <div class="progress-container">
-                <p style="font-size:0.8rem; font-weight:700;">प्रोग्रेस: <span id="p-text">0/10</span> शेयर</p>
+                <p style="font-size:0.8rem; font-weight:700;">प्रोग्रेस: <span id="p-text">0/10</span></p>
                 <div class="p-bar-bg"><div class="p-bar-fill" id="p-fill"></div></div>
-                <a href="javascript:void(0)" class="btn-wa" id="waBtn" onclick="processShare()">
-                    WhatsApp पर शेयर करें 🚀
-                </a>
-                <p id="cooldown"></p>
+                <a href="javascript:void(0)" class="btn-wa" id="waBtn" onclick="processShare()">WhatsApp शेयर 🚀</a>
+                <p id="cooldown" style="font-size:0.8rem; color:#ff4d4d; margin-top:5px; font-weight:700;"></p>
             </div>
+        </div>
+
+        <div class="lvl" id="l1">🔓 लेवल 1 (3 शेयर)</div>
+        <div class="lvl" id="l2">🔓 लेवल 2 (6 शेयर)</div>
+        <div class="lvl" id="l3">🔥 फाइनल सरप्राइज (10 शेयर)</div>
+    </div>
+
+    <!-- BANNER AD BOTTOM -->
+    <div class="ad-slot">
+        <script type="text/javascript">
+            atOptions = { 'key' : '31853b4e2d4b39a61cfde0a3550d6128', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
+        </script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/31853b4e2d4b39a61cfde0a3550d6128/invoke.js"></script>
+    </div>
+
+    <script>
+        const aiData = {
+            openers: ["इस 2026 में, ", "नए साल की सुबह ", "आने वाला यह साल ", "2026 का हर लम्हा "],
+            success: ["आपके करियर को नयी मंज़िल दे, ", "सफलता आपके दरवाज़े पर दस्तक दे, "],
+            love: ["आपके जीवन में प्यार की खुशबू महके, ", "रिश्तों में मिठास और बढ़ जाए, "],
+            funny: ["आपकी पुरानी उधारी माफ़ हो जाए, ", "पड़ोसी आपसे जलना कम कर दें, "],
+            friend: ["सच्चे दोस्तों का साथ बना रहे, ", "दोस्ती की महफ़िलें हमेशा सजी रहें, "],
+            family: ["आपके घर के आंगन में सुख-शांति रहे, ", "परिवार में खुशियों की रौनक लगी रहे, "],
+            predictions: ["सुख और शांति आपके घर का पता न भूलें।", "नया साल आपके लिए ऐतिहासिक हो!", "किस्मत आपके कदम चूमे।"]
+        };
+
+        let shareCount = parseInt(localStorage.getItem('hny_v5_shares')) || 0;
+        let lastShare = parseInt(localStorage.getItem('hny_v5_ts')) || 0;
+
+        function generateAIWish() {
+            const type = document.getElementById('wishType').value;
+            const intro = aiData.openers[Math.floor(Math.random() * aiData.openers.length)];
+            const mid = aiData[type][Math.floor(Math.random() * aiData[type].length)];
+            const pred = aiData.predictions[Math.floor(Math.random() * aiData.predictions.length)];
+            document.getElementById('aiWishText').innerText = `${intro}${mid}${pred}`;
+        }
+
+        function initAI() {
+            const name = document.getElementById('userName').value.trim();
+            if(!name) { alert("नाम लिखें!"); return; }
+            document.getElementById('input-screen').style.display = 'none';
+            document.getElementById('output-screen').style.display = 'block';
+            document.getElementById('userHeader').innerText = name + " की विश:";
+            generateAIWish();
+            updateUI();
+        }
+
+        function processShare() {
+            const now = Date.now();
+            if(now - lastShare < 10000) { alert("10 सेकंड रुकें!"); return; }
+            const name = document.getElementById('userName').value;
+            const wish = document.getElementById('aiWishText').innerText;
+            const msg = encodeURIComponent(`✨ *${name}* ने आपको 2026 का AI संदेश भेजा है:\n\n"${wish}"\n\nयहाँ देखें 👇\n${window.location.href.split('?')[0]}`);
+            window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
+            shareCount++;
+            lastShare = Date.now();
+            localStorage.setItem('hny_v5_shares', shareCount);
+            localStorage.setItem('hny_v5_ts', lastShare);
+            updateUI();
+            runTimer();
+        }
+
+        function runTimer() {
+            const btn = document.getElementById('waBtn'), cd = document.getElementById('cooldown');
+            btn.classList.add('disabled');
+            let t = 10;
+            const itv = setInterval(() => {
+                t--; cd.innerText = `अगला शेयर ${t}s बाद...`;
+                if(t <= 0) { clearInterval(itv); btn.classList.remove('disabled'); cd.innerText = ""; }
+            }, 1000);
+        }
+
+        function updateUI() {
+            document.getElementById('p-fill').style.width = Math.min((shareCount / 10) * 100, 100) + "%";
+            document.getElementById('p-text').innerText = `${shareCount}/10`;
+            if(shareCount >= 3) { document.getElementById('l1').classList.add('active'); document.getElementById('l1').innerText = "🔮 भविष्यवाणी: 2026 में आप मालामाल होंगे!"; }
+            if(shareCount >= 6) { document.getElementById('l2').classList.add('active'); document.getElementById('l2').innerText = "🎨 लकी रंग: गोल्डन | लकी नंबर: 7"; }
+            if(shareCount >= 10) { document.getElementById('l3').classList.add('active'); document.getElementById('l3').innerText = "👑 आप 2026 के विजेता बनेंगे! बधाई हो!"; confetti(); }
+        }
+
+        setInterval(() => {
+            const diff = new Date("Jan 1, 2026 00:00:00").getTime() - new Date().getTime();
+            if(diff <= 0) return;
+            document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }, 1000);
+
+        window.onload = () => { if(shareCount > 0) updateUI(); };
+    </script>
+</body>
+</html>            </div>
         </div>
 
         <div class="lvl" id="l1">🔓 लेवल 1: 2026 की भविष्यवाणी (3 शेयर)</div>
