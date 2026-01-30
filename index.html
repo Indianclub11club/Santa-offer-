@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ego Quiz - Ultimate Fix</title>
+    <title>Ego Quiz - Mobile Fix</title>
     
     <style>
         :root {
@@ -18,18 +18,6 @@
         * { box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; font-family: var(--font-main); }
         body { margin: 0; padding: 0; background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 30%, #111 0%, #000 85%); color: white; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
 
-        /* --- ADSTERRA WRAPPER FIX --- */
-        #adsterra-native-wrapper {
-            width: 100%; max-width: 350px; min-height: 100px; margin: 10px auto;
-            text-align: center; z-index: 50; display: none; 
-            justify-content: center; align-items: center;
-            background: rgba(255, 255, 255, 0.02); border-radius: 8px; padding: 5px;
-            pointer-events: none; /* KEY FIX: Wrapper won't block clicks */
-        }
-        #adsterra-native-wrapper iframe, #adsterra-native-wrapper div { 
-            pointer-events: auto; /* Allow clicks ONLY on the ad itself */
-        }
-
         /* --- SCREENS --- */
         .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 20px; text-align: center; position: relative; overflow-y: auto; }
         .screen.active { display: flex; }
@@ -42,28 +30,31 @@
         .stat-val { display: block; font-size: 1.4rem; font-weight: bold; }
         .stat-label { font-size: 0.7rem; color: #888; }
 
-        /* FIX: High Z-Index for Input & Button */
-        .input-group { margin-bottom: 20px; width: 100%; max-width: 300px; position: relative; z-index: 99999; }
+        /* FIX: Input Z-Index */
+        .input-group { margin-bottom: 20px; width: 100%; max-width: 300px; position: relative; z-index: 100; }
         input[type="text"] { background: transparent; border: none; border-bottom: 2px solid #333; padding: 15px; width: 100%; color: white; text-align: center; font-size: 1.2rem; outline: none; transition: 0.4s; font-weight: bold; pointer-events: auto; }
         input[type="text"]:focus { border-bottom: 2px solid var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
 
+        /* FIX: Button Logic & Z-Index */
         .btn-start { 
             background: white; color: black; border: none; padding: 18px 50px; 
             font-size: 1.1rem; font-weight: 900; text-transform: uppercase; 
             cursor: pointer; clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); 
-            transition: 0.3s; position: relative; 
-            z-index: 2147483647; /* MAX Z-INDEX TO FIX CLICK ISSUE */
+            transition: 0.2s; position: relative; 
+            z-index: 999999; /* Highest Priority */
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); 
             pointer-events: auto;
+            touch-action: manipulation; /* Mobile Fix */
+            -webkit-appearance: none; /* iOS Fix */
         }
-        .btn-start:hover { background: var(--neon-blue); box-shadow: 0 0 30px var(--neon-blue); transform: translateY(-2px); }
+        .btn-start:active { background: var(--neon-blue); transform: scale(0.95); }
 
         /* Game UI */
         .level-badge { font-size: 0.8rem; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; padding: 5px 15px; border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 20px; background: rgba(0, 243, 255, 0.05); box-shadow: 0 0 10px rgba(0, 243, 255, 0.1); animation: pulse-glow 2s infinite; }
         .ego-hint { font-size: 0.85rem; color: #aaa; font-style: italic; margin-bottom: 15px; min-height: 20px; transition: opacity 0.5s; text-shadow: 0 0 5px rgba(255,255,255,0.1); }
         .question-box { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; min-height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; font-size: 1.3rem; font-weight: 600; line-height: 1.5; box-shadow: 0 10px 40px rgba(0,0,0,0.5); position: relative; overflow: hidden; opacity: 0; }
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 400px; }
-        .opt-btn { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.8)); border: 1px solid rgba(255,255,255,0.1); color: #e0e0e0; padding: 20px 10px; font-size: 1rem; font-weight: 500; cursor: pointer; border-radius: 12px; position: relative; text-align: center; z-index: 10; }
+        .opt-btn { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.8)); border: 1px solid rgba(255,255,255,0.1); color: #e0e0e0; padding: 20px 10px; font-size: 1rem; font-weight: 500; cursor: pointer; border-radius: 12px; position: relative; text-align: center; z-index: 10; touch-action: manipulation; }
         
         /* Modals */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
@@ -79,11 +70,19 @@
         .slide-up { animation: slideUpFade 0.5s ease forwards; }
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Ad Wrapper (Dynamic) */
+        #adsterra-native-wrapper {
+            width: 100%; max-width: 350px; min-height: 100px; margin: 10px auto;
+            text-align: center; display: none; 
+            justify-content: center; align-items: center;
+            background: rgba(255, 255, 255, 0.02); border-radius: 8px; padding: 5px;
+        }
+
     </style>
 </head>
 <body>
 
-    <div id="adsterra-native-wrapper"></div>
+    <div id="ad-container-root"></div>
 
     <div class="progress-bar" id="progressBar" style="position:absolute; top:0; left:0; width:0%; height:3px; background:var(--neon-purple); transition:0.3s;"></div>
     <div id="streakBadge" style="display:none; position:absolute; top:15px; right:15px; background:rgba(255,69,0,0.2); border:1px solid orangered; padding:5px 10px; border-radius:15px; font-size:0.9rem; color:orangered;">🔥 Streak: <span id="streakCount">0</span></div>
@@ -101,7 +100,7 @@
             <input type="text" id="username" placeholder="ENTER CODENAME" autocomplete="off">
         </div>
         
-        <button id="startBtn" class="btn-start pulse" onclick="window.enterGame()">ENTER ARENA</button>
+        <button id="startBtn" class="btn-start pulse">ENTER ARENA</button>
     </div>
 
     <div id="gameScreen" class="screen">
@@ -140,45 +139,69 @@
     </div>
 
     <script>
-        // --- 1. GLOBAL SCOPE DEFINTION (CRITICAL FIX) ---
-        // Define enterGame immediately to ensure it exists before click
-        window.enterGame = function() {
-            try {
-                console.log("Enter Game Triggered");
-                let n = document.getElementById('username').value;
-                if(!n) { 
-                    // Visual feedback for empty input
-                    let input = document.getElementById('username');
-                    input.style.borderBottom = "2px solid red";
-                    input.classList.add('pulse');
-                    setTimeout(() => {
-                        input.style.borderBottom = "2px solid #333";
-                        input.classList.remove('pulse');
-                    }, 500);
-                    return; 
-                }
-                
-                state.name = n;
-                document.getElementById('entryScreen').classList.remove('active');
-                document.getElementById('gameScreen').classList.add('active');
-                
-                if(typeof startGhostCompetitor === 'function') startGhostCompetitor();
-                loadLevel(true);
-            } catch(e) {
-                console.error("Game Start Error:", e);
-                alert("Game Error: Please refresh. " + e.message);
+        // --- 1. GLOBAL SCOPE GAME START LOGIC ---
+        window.state = { level: 0, streak: 0, failsInLevel: 0, name: "" };
+
+        window.enterGame = function(e) {
+            // Prevent ghost clicks if called via touchstart
+            if (e && e.cancelable) e.preventDefault();
+            
+            console.log("Enter Game Triggered via " + (e ? e.type : "manual"));
+            
+            let n = document.getElementById('username').value;
+            if(!n) { 
+                let input = document.getElementById('username');
+                input.style.borderBottom = "2px solid red";
+                input.focus();
+                setTimeout(() => input.style.borderBottom = "2px solid #333", 500);
+                return; 
             }
+            
+            state.name = n;
+            document.getElementById('entryScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.add('active');
+            
+            if(typeof startGhostCompetitor === 'function') startGhostCompetitor();
+            loadLevel(true);
         };
 
-        // --- 2. ADSTERRA LOGIC ---
+        // --- 2. EVENT BINDING (MOBILE FIX) ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const startBtn = document.getElementById("startBtn");
+            const inputField = document.getElementById("username");
+
+            if(startBtn) {
+                // Bind both click and touchstart for instant mobile response
+                startBtn.addEventListener("click", window.enterGame);
+                startBtn.addEventListener("touchstart", window.enterGame, { passive: false });
+            }
+
+            if(inputField) {
+                inputField.addEventListener("keypress", function(event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        window.enterGame();
+                    }
+                });
+            }
+        });
+
+        // --- 3. ADSTERRA DYNAMIC LOADING (SAFE) ---
         let adsAllowed = false; 
         function initAdNetwork() {
             if (adsAllowed) return; 
             adsAllowed = true;
+            
+            // Create Wrapper Dynamically
+            let wrapper = document.createElement('div');
+            wrapper.id = 'adsterra-native-wrapper';
+            wrapper.style.cssText = "width: 100%; max-width: 350px; min-height: 100px; margin: 10px auto; text-align: center; display: flex; justify-content: center; align-items: center; background: rgba(255, 255, 255, 0.02); border-radius: 8px; padding: 5px;";
+            
             // Popunder
             let popScript = document.createElement('script');
             popScript.src = "https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js";
             document.head.appendChild(popScript);
+            
             // Native Banner
             let bannerScript = document.createElement('script');
             bannerScript.src = "https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js";
@@ -186,20 +209,20 @@
             bannerScript.setAttribute('data-cfasync', 'false');
             let bannerDiv = document.createElement('div');
             bannerDiv.id = "container-ed0499a255f96083e92a9524840692b6";
-            let wrapper = document.getElementById('adsterra-native-wrapper');
-            wrapper.style.display = "flex"; 
+            
             wrapper.appendChild(bannerScript);
             wrapper.appendChild(bannerDiv);
+            document.getElementById('ad-container-root').appendChild(wrapper);
         }
 
-        const adWrapper = document.getElementById('adsterra-native-wrapper');
         function moveAdTo(targetSelector) {
             if (!adsAllowed) return; 
             const target = document.querySelector(targetSelector);
-            if(target && adWrapper) target.appendChild(adWrapper);
+            const wrapper = document.getElementById('adsterra-native-wrapper');
+            if(target && wrapper) target.appendChild(wrapper);
         }
 
-        // --- 3. GAME DATA & LOGIC ---
+        // --- 4. GAME DATA & FUNCTIONS ---
         const messages = {
             success: ["Lagta hai dimaag sahi direction mein hai 😎", "Ab samajh aaya kyu aaye ho yahan 🧠", "Tukka tha ya talent? Jo bhi ho, sahi hai 🔥"],
             fail: ["Bas? Itni jaldi hawa nikal gayi? 🎈", "Retry karo... izzat abhi bachi hai 💯", "Google karne ka time nahi mila? 😂"],
@@ -235,12 +258,9 @@
             { q: "Revenge: Opposite of Cold?", a: ["Ice", "Hot", "Water", "Wind"], c: 1 }
         ];
 
-        let state = { level: 0, streak: 0, failsInLevel: 0, name: "" };
-
         function loadLevel(first = false) {
             if(state.level >= activeQuestions.length) return alert("YOU WON! GOD LEVEL UNLOCKED 🏆");
 
-            // Enable Ads if Level 3 (Index 2) reached
             if (state.level >= 2 && !adsAllowed) {
                 initAdNetwork();
             }
@@ -269,6 +289,8 @@
                 btn.style.animationDelay = (i * 0.1) + 's';
                 btn.innerText = opt;
                 btn.onclick = (e) => checkAnswer(i, e.target);
+                // Also add touchstart for fast response on options
+                btn.ontouchstart = (e) => { e.preventDefault(); checkAnswer(i, e.target); };
                 oBox.appendChild(btn);
             });
             
@@ -324,26 +346,4 @@
         function showSuccess() {
             let msg = messages.success[Math.floor(Math.random() * messages.success.length)];
             document.getElementById('successMsg').innerText = `"${msg}"`;
-            if(state.level % 2 === 0 && adsAllowed) moveAdTo('#successModal #modal-ad-slot');
-            document.getElementById('successModal').style.display = 'flex';
-        }
-
-        function nextLevel() {
-            document.getElementById('successModal').style.display = 'none';
-            state.level++;
-            loadLevel();
-        }
-
-        function showFail() {
-            let msg = messages.fail[Math.floor(Math.random() * messages.fail.length)];
-            document.getElementById('failMsg').innerText = `"${msg}"`;
-            if (adsAllowed) moveAdTo('#failModal .ad-slot-modal');
-            document.getElementById('failModal').style.display = 'flex';
-        }
-
-        function retryLevel() {
-            document.getElementById('failModal').style.display = 'none';
-            if (adsAllowed) moveAdTo('#gameScreen .ad-slot-game');
-        }
-
-        function
+           
