@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ego Quiz - Ultimate Edition</title>
+    <title>Ego Quiz - Ultimate Fix</title>
     
     <style>
         :root {
@@ -11,85 +11,73 @@
             --neon-purple: #bc13fe;
             --neon-red: #ff0055;
             --neon-green: #00ff99;
-            --neon-orange: #ff4500;
             --bg-dark: #050505;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
             --font-main: 'Segoe UI', sans-serif;
         }
 
         * { box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; font-family: var(--font-main); }
         body { margin: 0; padding: 0; background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 30%, #111 0%, #000 85%); color: white; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
 
-        /* --- ADSTERRA WRAPPER --- */
+        /* --- ADSTERRA WRAPPER FIX --- */
         #adsterra-native-wrapper {
             width: 100%; max-width: 350px; min-height: 100px; margin: 10px auto;
-            text-align: center; z-index: 50; display: none; /* Hidden initially */
+            text-align: center; z-index: 50; display: none; 
             justify-content: center; align-items: center;
             background: rgba(255, 255, 255, 0.02); border-radius: 8px; padding: 5px;
-            position: relative; /* Ensure it respects flow */
+            pointer-events: none; /* KEY FIX: Wrapper won't block clicks */
         }
-        #adsterra-native-wrapper iframe { pointer-events: auto; }
+        #adsterra-native-wrapper iframe, #adsterra-native-wrapper div { 
+            pointer-events: auto; /* Allow clicks ONLY on the ad itself */
+        }
 
         /* --- SCREENS --- */
         .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 20px; text-align: center; position: relative; overflow-y: auto; }
         .screen.active { display: flex; }
 
-        /* --- STYLES --- */
+        /* --- UI STYLES --- */
         .hero-title { font-size: 2.8rem; font-weight: 900; text-transform: uppercase; position: relative; color: white; letter-spacing: -2px; margin-bottom: 5px; animation: glitch 1s linear infinite; }
         .ego-sub { color: #bbb; font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; font-weight: 600; opacity: 0.8; }
         .live-stats { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%; max-width: 350px; }
         .stat-card { background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.5)); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; flex: 1; }
         .stat-val { display: block; font-size: 1.4rem; font-weight: bold; }
         .stat-label { font-size: 0.7rem; color: #888; }
-        
+
         /* FIX: High Z-Index for Input & Button */
-        .input-group { margin-bottom: 20px; width: 100%; max-width: 300px; position: relative; z-index: 1000; }
+        .input-group { margin-bottom: 20px; width: 100%; max-width: 300px; position: relative; z-index: 99999; }
         input[type="text"] { background: transparent; border: none; border-bottom: 2px solid #333; padding: 15px; width: 100%; color: white; text-align: center; font-size: 1.2rem; outline: none; transition: 0.4s; font-weight: bold; pointer-events: auto; }
         input[type="text"]:focus { border-bottom: 2px solid var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
-        
+
         .btn-start { 
             background: white; color: black; border: none; padding: 18px 50px; 
             font-size: 1.1rem; font-weight: 900; text-transform: uppercase; 
             cursor: pointer; clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); 
-            transition: 0.3s; position: relative; z-index: 1000; /* FIX: High Priority */
+            transition: 0.3s; position: relative; 
+            z-index: 2147483647; /* MAX Z-INDEX TO FIX CLICK ISSUE */
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); 
             pointer-events: auto;
         }
         .btn-start:hover { background: var(--neon-blue); box-shadow: 0 0 30px var(--neon-blue); transform: translateY(-2px); }
 
-        /* Level Indicator */
+        /* Game UI */
         .level-badge { font-size: 0.8rem; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; padding: 5px 15px; border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 20px; background: rgba(0, 243, 255, 0.05); box-shadow: 0 0 10px rgba(0, 243, 255, 0.1); animation: pulse-glow 2s infinite; }
         .ego-hint { font-size: 0.85rem; color: #aaa; font-style: italic; margin-bottom: 15px; min-height: 20px; transition: opacity 0.5s; text-shadow: 0 0 5px rgba(255,255,255,0.1); }
         .question-box { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; min-height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; font-size: 1.3rem; font-weight: 600; line-height: 1.5; box-shadow: 0 10px 40px rgba(0,0,0,0.5); position: relative; overflow: hidden; opacity: 0; }
-        .question-box::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--neon-purple), transparent); animation: scanline 3s infinite; }
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 400px; }
-        .opt-btn { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.8)); border: 1px solid var(--glass-border); color: #e0e0e0; padding: 20px 10px; font-size: 1rem; font-weight: 500; cursor: pointer; border-radius: 12px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; opacity: 0; text-align: center; z-index: 10; }
-        .opt-btn:hover { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); color: white; transform: translateY(-2px); }
-        .opt-btn:active { transform: scale(0.95); background: rgba(0, 243, 255, 0.1); }
-        .opt-btn.correct { border-color: var(--neon-green) !important; box-shadow: 0 0 20px var(--neon-green) !important; background: rgba(0, 255, 153, 0.1) !important; }
-        .opt-btn.wrong { border-color: var(--neon-red) !important; animation: shake 0.4s !important; background: rgba(255, 0, 85, 0.1) !important; }
-
-        /* Animations */
-        .slide-up { animation: slideUpFade 0.5s ease forwards; }
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse-glow { 0% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.1); } 50% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); } 100% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.1); } }
-        @keyframes scanline { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-        @keyframes glitch { 0% { clip: rect(30px, 9999px, 10px, 0); } 100% { clip: rect(80px, 9999px, 90px, 0); } }
-        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
-        @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
-        .pulse { animation: pulse-btn 2s infinite; }
-
+        .opt-btn { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.8)); border: 1px solid rgba(255,255,255,0.1); color: #e0e0e0; padding: 20px 10px; font-size: 1rem; font-weight: 500; cursor: pointer; border-radius: 12px; position: relative; text-align: center; z-index: 10; }
+        
         /* Modals */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-        .modal-content { text-align: center; padding: 30px; border: 2px solid #333; background: #0a0a0a; width: 350px; border-radius: 15px; }
+        .modal-content { text-align: center; padding: 30px; border: 2px solid #333; background: #0a0a0a; width: 350px; border-radius: 15px; position: relative; z-index: 2001;}
         .title-success { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
         .title-fail { color: var(--neon-red); }
-        .title-revenge { color: var(--neon-orange); text-transform: uppercase; font-size: 1.8rem; margin-bottom: 10px; text-shadow: 0 0 15px var(--neon-orange); }
-        .btn-main { background: white; color: black; border: none; padding: 15px 40px; font-weight: 900; text-transform: uppercase; cursor: pointer; clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); transition: 0.2s; position: relative; z-index: 100; }
-        .btn-main:hover { background: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
-        .btn-revenge { background: var(--neon-orange); color: white; box-shadow: 0 0 20px var(--neon-orange); animation: shake 0.5s infinite; }
-        .progress-bar { position: absolute; top: 0; left: 0; width: 0%; height: 3px; background: var(--neon-purple); transition: 0.3s; box-shadow: 0 0 10px var(--neon-purple); }
+        .btn-main { background: white; color: black; border: none; padding: 15px 40px; font-weight: 900; text-transform: uppercase; cursor: pointer; position: relative; z-index: 100; margin-top: 10px; }
+
+        /* Animations */
+        @keyframes glitch { 0% { clip: rect(30px, 9999px, 10px, 0); } 100% { clip: rect(80px, 9999px, 90px, 0); } }
+        @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
+        .pulse { animation: pulse-btn 2s infinite; }
+        .slide-up { animation: slideUpFade 0.5s ease forwards; }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
     </style>
 </head>
@@ -97,9 +85,9 @@
 
     <div id="adsterra-native-wrapper"></div>
 
-    <div class="progress-bar" id="progressBar"></div>
-    <div class="streak-container" id="streakBadge" style="display:none; position:absolute; top:15px; right:15px; background:rgba(255,69,0,0.2); border:1px solid orangered; padding:5px 10px; border-radius:15px; font-size:0.9rem; color:orangered;">🔥 Streak: <span id="streakCount">0</span></div>
-    <div class="ghost-notify" id="ghostNotify" style="position:fixed; top:60px; background:rgba(0,243,255,0.1); border-left:3px solid var(--neon-blue); color:var(--neon-blue); padding:10px 20px; font-size:0.8rem; transform:translateX(120%); transition:0.5s; border-radius: 4px; z-index:1500;">Rohit just passed Level 5 🚀</div>
+    <div class="progress-bar" id="progressBar" style="position:absolute; top:0; left:0; width:0%; height:3px; background:var(--neon-purple); transition:0.3s;"></div>
+    <div id="streakBadge" style="display:none; position:absolute; top:15px; right:15px; background:rgba(255,69,0,0.2); border:1px solid orangered; padding:5px 10px; border-radius:15px; font-size:0.9rem; color:orangered;">🔥 Streak: <span id="streakCount">0</span></div>
+    <div id="ghostNotify" style="position:fixed; top:60px; background:rgba(0,243,255,0.1); border-left:3px solid var(--neon-blue); color:var(--neon-blue); padding:10px 20px; font-size:0.8rem; transform:translateX(120%); transition:0.5s; border-radius: 4px; z-index:1500;">Rohit just passed Level 5 🚀</div>
 
     <div id="entryScreen" class="screen active">
         <h1 class="hero-title" data-text="DARE TO PLAY?">DARE TO PLAY?</h1>
@@ -113,7 +101,7 @@
             <input type="text" id="username" placeholder="ENTER CODENAME" autocomplete="off">
         </div>
         
-        <button id="startBtn" class="btn-start pulse" onclick="enterGame()">ENTER ARENA</button>
+        <button id="startBtn" class="btn-start pulse" onclick="window.enterGame()">ENTER ARENA</button>
     </div>
 
     <div id="gameScreen" class="screen">
@@ -143,35 +131,61 @@
     </div>
 
     <div id="revengeModal" class="modal">
-        <div class="modal-content" style="border-color: var(--neon-orange); box-shadow: 0 0 30px rgba(255, 69, 0, 0.3);">
-            <h2 class="title-revenge">🔥 REVENGE MODE</h2>
-            <p style="color:white; font-size:1.1rem; margin-bottom: 10px;">Kismat kharab thi ya sawal hard? 🤔</p>
-            <p style="color:#aaa; font-size: 0.95rem; margin-bottom: 25px;">Ek galti maaf... <br><span style="color: var(--neon-orange); font-weight:bold;">New Question Loading...</span></p>
-            <button class="btn-main btn-revenge" onclick="activateRevenge()">BRING IT ON! ⚔️</button>
+        <div class="modal-content" style="border-color: #ff4500; box-shadow: 0 0 30px rgba(255, 69, 0, 0.3);">
+            <h2 class="title-revenge" style="color:#ff4500; font-size:1.8rem;">🔥 REVENGE MODE</h2>
+            <p style="color:white; margin-bottom:10px;">Kismat kharab thi ya sawal hard? 🤔</p>
+            <p style="color:#aaa; font-size:0.9rem;">Ek galti maaf... <br><span style="color:#ff4500; font-weight:bold;">New Question Loading...</span></p>
+            <button class="btn-main" style="background:#ff4500; color:white;" onclick="activateRevenge()">BRING IT ON! ⚔️</button>
         </div>
     </div>
 
     <script>
-        /* --- 1. ADSTERRA SMART MANAGEMENT --- */
-        let adsAllowed = false; 
+        // --- 1. GLOBAL SCOPE DEFINTION (CRITICAL FIX) ---
+        // Define enterGame immediately to ensure it exists before click
+        window.enterGame = function() {
+            try {
+                console.log("Enter Game Triggered");
+                let n = document.getElementById('username').value;
+                if(!n) { 
+                    // Visual feedback for empty input
+                    let input = document.getElementById('username');
+                    input.style.borderBottom = "2px solid red";
+                    input.classList.add('pulse');
+                    setTimeout(() => {
+                        input.style.borderBottom = "2px solid #333";
+                        input.classList.remove('pulse');
+                    }, 500);
+                    return; 
+                }
+                
+                state.name = n;
+                document.getElementById('entryScreen').classList.remove('active');
+                document.getElementById('gameScreen').classList.add('active');
+                
+                if(typeof startGhostCompetitor === 'function') startGhostCompetitor();
+                loadLevel(true);
+            } catch(e) {
+                console.error("Game Start Error:", e);
+                alert("Game Error: Please refresh. " + e.message);
+            }
+        };
 
+        // --- 2. ADSTERRA LOGIC ---
+        let adsAllowed = false; 
         function initAdNetwork() {
             if (adsAllowed) return; 
             adsAllowed = true;
-            console.log("Ads Initialized");
-
+            // Popunder
             let popScript = document.createElement('script');
             popScript.src = "https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js";
             document.head.appendChild(popScript);
-
+            // Native Banner
             let bannerScript = document.createElement('script');
             bannerScript.src = "https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js";
             bannerScript.setAttribute('async', 'async');
             bannerScript.setAttribute('data-cfasync', 'false');
-            
             let bannerDiv = document.createElement('div');
             bannerDiv.id = "container-ed0499a255f96083e92a9524840692b6";
-
             let wrapper = document.getElementById('adsterra-native-wrapper');
             wrapper.style.display = "flex"; 
             wrapper.appendChild(bannerScript);
@@ -179,19 +193,18 @@
         }
 
         const adWrapper = document.getElementById('adsterra-native-wrapper');
-        
         function moveAdTo(targetSelector) {
             if (!adsAllowed) return; 
             const target = document.querySelector(targetSelector);
             if(target && adWrapper) target.appendChild(adWrapper);
         }
 
-        /* --- 2. GAME LOGIC --- */
+        // --- 3. GAME DATA & LOGIC ---
         const messages = {
             success: ["Lagta hai dimaag sahi direction mein hai 😎", "Ab samajh aaya kyu aaye ho yahan 🧠", "Tukka tha ya talent? Jo bhi ho, sahi hai 🔥"],
             fail: ["Bas? Itni jaldi hawa nikal gayi? 🎈", "Retry karo... izzat abhi bachi hai 💯", "Google karne ka time nahi mila? 😂"],
             ghost: ["Rohit just cleared this level 🚀", "Amit is now on Level 10 😈", "Priya is catching up fast 🔥"],
-            hints: ["Focus... This one is not easy.", "Confidence ya guess? Soch lo.", "Legends think before tapping.", "Galti ki gunjaish nahi hai.", "Are you sure about this?", "Don't let your ego decide.", "Easy lag raha hai? Wahi trap hai."]
+            hints: ["Focus... This one is not easy.", "Confidence ya guess? Soch lo.", "Legends think before tapping.", "Galti ki gunjaish nahi hai."]
         };
 
         let activeQuestions = [
@@ -224,27 +237,10 @@
 
         let state = { level: 0, streak: 0, failsInLevel: 0, name: "" };
 
-        /* --- 3. START GAME FIX (GLOBAL SCOPE) --- */
-        // Explicitly attach to window for GitHub Pages safety
-        window.enterGame = function() {
-            console.log("Start Button Clicked");
-            let n = document.getElementById('username').value;
-            if(!n) { 
-                document.getElementById('username').style.borderBottom = "2px solid red"; 
-                return; 
-            }
-            state.name = n;
-            document.getElementById('entryScreen').classList.remove('active');
-            document.getElementById('gameScreen').classList.add('active');
-            
-            startGhostCompetitor();
-            loadLevel(true);
-        };
-
         function loadLevel(first = false) {
             if(state.level >= activeQuestions.length) return alert("YOU WON! GOD LEVEL UNLOCKED 🏆");
 
-            // CHECK: Enable Ads if Level 3 (Index 2) reached
+            // Enable Ads if Level 3 (Index 2) reached
             if (state.level >= 2 && !adsAllowed) {
                 initAdNetwork();
             }
@@ -281,15 +277,20 @@
 
         function checkAnswer(idx, btnElement) {
             let q = activeQuestions[state.level];
-            
             if(idx === q.c) {
-                if(btnElement) btnElement.classList.add('correct');
+                if(btnElement) {
+                    btnElement.style.border = "1px solid #00ff99";
+                    btnElement.style.background = "rgba(0,255,153,0.2)";
+                }
                 state.streak++;
                 state.failsInLevel = 0;
                 updateStreakUI();
                 setTimeout(() => showSuccess(), 300);
             } else {
-                if(btnElement) btnElement.classList.add('wrong');
+                if(btnElement) {
+                    btnElement.style.border = "1px solid #ff0055";
+                    btnElement.style.background = "rgba(255,0,85,0.2)";
+                }
                 state.streak = 0;
                 state.failsInLevel++;
                 updateStreakUI();
@@ -315,4 +316,34 @@
                 state.failsInLevel = 0; 
                 setTimeout(() => { loadLevel(); showGhostNotify("⚠️ New Question Loaded! Good Luck."); }, 200);
             } else {
-                alert("No more revenge questions!
+                alert("No more revenge questions! 😈");
+                loadLevel();
+            }
+        }
+
+        function showSuccess() {
+            let msg = messages.success[Math.floor(Math.random() * messages.success.length)];
+            document.getElementById('successMsg').innerText = `"${msg}"`;
+            if(state.level % 2 === 0 && adsAllowed) moveAdTo('#successModal #modal-ad-slot');
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        function nextLevel() {
+            document.getElementById('successModal').style.display = 'none';
+            state.level++;
+            loadLevel();
+        }
+
+        function showFail() {
+            let msg = messages.fail[Math.floor(Math.random() * messages.fail.length)];
+            document.getElementById('failMsg').innerText = `"${msg}"`;
+            if (adsAllowed) moveAdTo('#failModal .ad-slot-modal');
+            document.getElementById('failModal').style.display = 'flex';
+        }
+
+        function retryLevel() {
+            document.getElementById('failModal').style.display = 'none';
+            if (adsAllowed) moveAdTo('#gameScreen .ad-slot-game');
+        }
+
+        function
