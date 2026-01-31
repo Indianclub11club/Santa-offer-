@@ -1,349 +1,405 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ego Quiz - Mobile Fix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduVoice: शिक्षा और समाज</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <script src="https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js"></script>
+
     <style>
+        /* --- CSS VARIABLES --- */
         :root {
-            --neon-blue: #00f3ff;
-            --neon-purple: #bc13fe;
-            --neon-red: #ff0055;
-            --neon-green: #00ff99;
-            --bg-dark: #050505;
-            --font-main: 'Segoe UI', sans-serif;
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --editorial-bg: #fffbf2;
+            --editorial-border: #d4a373;
         }
 
-        * { box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; font-family: var(--font-main); }
-        body { margin: 0; padding: 0; background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 30%, #111 0%, #000 85%); color: white; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* --- SCREENS --- */
-        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 20px; text-align: center; position: relative; overflow-y: auto; }
-        .screen.active { display: flex; }
-
-        /* --- UI STYLES --- */
-        .hero-title { font-size: 2.8rem; font-weight: 900; text-transform: uppercase; position: relative; color: white; letter-spacing: -2px; margin-bottom: 5px; animation: glitch 1s linear infinite; }
-        .ego-sub { color: #bbb; font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; font-weight: 600; opacity: 0.8; }
-        .live-stats { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%; max-width: 350px; }
-        .stat-card { background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.5)); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; flex: 1; }
-        .stat-val { display: block; font-size: 1.4rem; font-weight: bold; }
-        .stat-label { font-size: 0.7rem; color: #888; }
-
-        /* FIX: Input Z-Index */
-        .input-group { margin-bottom: 20px; width: 100%; max-width: 300px; position: relative; z-index: 100; }
-        input[type="text"] { background: transparent; border: none; border-bottom: 2px solid #333; padding: 15px; width: 100%; color: white; text-align: center; font-size: 1.2rem; outline: none; transition: 0.4s; font-weight: bold; pointer-events: auto; }
-        input[type="text"]:focus { border-bottom: 2px solid var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
-
-        /* FIX: Button Logic & Z-Index */
-        .btn-start { 
-            background: white; color: black; border: none; padding: 18px 50px; 
-            font-size: 1.1rem; font-weight: 900; text-transform: uppercase; 
-            cursor: pointer; clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); 
-            transition: 0.2s; position: relative; 
-            z-index: 999999; /* Highest Priority */
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); 
-            pointer-events: auto;
-            touch-action: manipulation; /* Mobile Fix */
-            -webkit-appearance: none; /* iOS Fix */
+        body {
+            font-family: 'Hind', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
-        .btn-start:active { background: var(--neon-blue); transform: scale(0.95); }
 
-        /* Game UI */
-        .level-badge { font-size: 0.8rem; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; padding: 5px 15px; border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 20px; background: rgba(0, 243, 255, 0.05); box-shadow: 0 0 10px rgba(0, 243, 255, 0.1); animation: pulse-glow 2s infinite; }
-        .ego-hint { font-size: 0.85rem; color: #aaa; font-style: italic; margin-bottom: 15px; min-height: 20px; transition: opacity 0.5s; text-shadow: 0 0 5px rgba(255,255,255,0.1); }
-        .question-box { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; min-height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; font-size: 1.3rem; font-weight: 600; line-height: 1.5; box-shadow: 0 10px 40px rgba(0,0,0,0.5); position: relative; overflow: hidden; opacity: 0; }
-        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 400px; }
-        .opt-btn { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.8)); border: 1px solid rgba(255,255,255,0.1); color: #e0e0e0; padding: 20px 10px; font-size: 1rem; font-weight: 500; cursor: pointer; border-radius: 12px; position: relative; text-align: center; z-index: 10; touch-action: manipulation; }
+        /* --- Header --- */
+        header {
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 { font-size: 1.6rem; margin-bottom: 2px; letter-spacing: 0.5px; font-weight: 700; }
+        header p { font-size: 0.9rem; opacity: 0.95; font-weight: 300; }
+
+        /* --- Layout Container --- */
+        .container { 
+            max-width: 800px; 
+            margin: 15px auto; 
+            padding: 0 12px; 
+        }
+
+        /* --- Common Card Styles (Compact) --- */
+        .card {
+            background: var(--card-bg);
+            padding: 18px;
+            border-radius: 10px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+            margin-bottom: 12px;
+            position: relative; /* For Ad positioning */
+        }
+
+        /* --- 1. Editorial Section --- */
+        .editorial-section {
+            border-left: 4px solid var(--editorial-border);
+            background-color: var(--editorial-bg);
+        }
         
-        /* Modals */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-        .modal-content { text-align: center; padding: 30px; border: 2px solid #333; background: #0a0a0a; width: 350px; border-radius: 15px; position: relative; z-index: 2001;}
-        .title-success { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
-        .title-fail { color: var(--neon-red); }
-        .btn-main { background: white; color: black; border: none; padding: 15px 40px; font-weight: 900; text-transform: uppercase; cursor: pointer; position: relative; z-index: 100; margin-top: 10px; }
-
-        /* Animations */
-        @keyframes glitch { 0% { clip: rect(30px, 9999px, 10px, 0); } 100% { clip: rect(80px, 9999px, 90px, 0); } }
-        @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
-        .pulse { animation: pulse-btn 2s infinite; }
-        .slide-up { animation: slideUpFade 0.5s ease forwards; }
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Ad Wrapper (Dynamic) */
-        #adsterra-native-wrapper {
-            width: 100%; max-width: 350px; min-height: 100px; margin: 10px auto;
-            text-align: center; display: none; 
-            justify-content: center; align-items: center;
-            background: rgba(255, 255, 255, 0.02); border-radius: 8px; padding: 5px;
+        .editorial-title {
+            font-family: 'Merriweather', serif;
+            color: #8d5b26;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px; font-weight: 700;
         }
 
+        .editorial-content { 
+            font-family: 'Merriweather', serif; 
+            font-size: 0.95rem; 
+            color: #4a4a4a; 
+            line-height: 1.6; 
+            font-style: italic; 
+        }
+        
+        .editorial-content p { margin-bottom: 10px; }
+
+        /* --- 2. Article Section --- */
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+            line-height: 1.3;
+        }
+
+        .article-content p { margin-bottom: 10px; font-size: 1rem; text-align: justify; }
+
+        .highlight-box {
+            background: #eef2f5;
+            padding: 12px;
+            border-left: 3px solid var(--primary-color);
+            margin: 12px 0;
+            border-radius: 4px;
+        }
+        
+        .highlight-box h3 { font-size: 1rem; margin-bottom: 5px; }
+        .highlight-box ul { padding-left: 20px; }
+        .highlight-box li { margin-bottom: 4px; font-size: 0.9rem; }
+
+        /* --- ✅ SMARTLINK CTA BUTTON STYLE --- */
+        .cta-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+        .smart-cta-btn {
+            background: #ff9800; /* Attention grabbing color */
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            border: 2px solid white;
+        }
+        .smart-cta-btn:hover {
+            transform: scale(1.05);
+            background: #f57c00;
+        }
+
+        /* --- 3. Poll Section --- */
+        .poll-container { text-align: center; border: 1px solid #e1e4e8; }
+        .poll-question { 
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            margin-bottom: 15px; 
+            color: var(--primary-color); 
+        }
+        
+        .poll-options { display: flex; justify-content: center; gap: 10px; }
+
+        .btn-vote {
+            padding: 10px 0;
+            font-size: 1rem; 
+            border: none; border-radius: 5px;
+            cursor: pointer; transition: transform 0.2s; 
+            font-family: 'Hind', sans-serif; font-weight: 600;
+            width: 45%; 
+        }
+        .btn-yes { background-color: var(--success-color); color: white; }
+        .btn-no { background-color: var(--danger-color); color: white; }
+        .btn-vote:active { transform: scale(0.98); }
+
+        .poll-results { display: none; margin-top: 15px; text-align: left; }
+        .bar-container { margin-bottom: 8px; }
+        .bar-label { display: flex; justify-content: space-between; margin-bottom: 3px; font-weight: 600; font-size: 0.85rem; }
+        .progress-track { background: #eee; height: 10px; border-radius: 5px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; transition: width 1s ease-in-out; }
+
+        /* --- ✅ NATIVE AD CONTAINER STYLE --- */
+        .ad-native-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px; /* Prevent layout shift */
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #eee;
+        }
+
+        /* --- 4. Comments --- */
+        .comment-form { margin-bottom: 20px; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #eee; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .btn-submit { background: var(--primary-color); color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; }
+        
+        .comment-card { border-bottom: 1px solid #f1f1f1; padding: 12px 0; display: flex; gap: 10px; }
+        .avatar { width: 35px; height: 35px; background: #dfe6e9; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #555; flex-shrink: 0; }
+        .comment-body { flex: 1; }
+        .user-name { font-weight: 700; font-size: 0.95rem; color: #2c3e50; }
+        .vote-badge { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; margin-left: 6px; font-weight: 600; }
+        .badge-yes { background: #e8f5e9; color: var(--success-color); }
+        .badge-no { background: #fceceb; color: var(--danger-color); }
+
+        /* --- Mobile Tweaks --- */
+        @media (max-width: 600px) {
+            .btn-vote { width: 100%; }
+            .poll-options { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="ad-container-root"></div>
+    <header>
+        <h1>EduVoice: शिक्षा संवाद</h1>
+        <p>पहचान से परे, प्रतिभा की ओर</p>
+    </header>
 
-    <div class="progress-bar" id="progressBar" style="position:absolute; top:0; left:0; width:0%; height:3px; background:var(--neon-purple); transition:0.3s;"></div>
-    <div id="streakBadge" style="display:none; position:absolute; top:15px; right:15px; background:rgba(255,69,0,0.2); border:1px solid orangered; padding:5px 10px; border-radius:15px; font-size:0.9rem; color:orangered;">🔥 Streak: <span id="streakCount">0</span></div>
-    <div id="ghostNotify" style="position:fixed; top:60px; background:rgba(0,243,255,0.1); border-left:3px solid var(--neon-blue); color:var(--neon-blue); padding:10px 20px; font-size:0.8rem; transform:translateX(120%); transition:0.5s; border-radius: 4px; z-index:1500;">Rohit just passed Level 5 🚀</div>
+    <div class="container">
 
-    <div id="entryScreen" class="screen active">
-        <h1 class="hero-title" data-text="DARE TO PLAY?">DARE TO PLAY?</h1>
-        <p class="ego-sub">Only 0.1% reach the end</p>
-        <div class="live-stats">
-            <div class="stat-card stat-fail"><span class="stat-val">1,248</span><span class="stat-label">FAILED TODAY</span></div>
-            <div class="stat-card stat-level"><span class="stat-val">Lvl 12</span><span class="stat-label">HIGHEST RECORD</span></div>
+        <section class="card editorial-section">
+            <div class="editorial-title">
+                <span>✒️ नजरिया: बदलाव की आहट</span>
+            </div>
+            <div class="editorial-content">
+                <p>भारत जैसे विविधता वाले देश में शिक्षा हमेशा से समाज का आईना रही है। लेकिन एक समय ऐसा भी रहा है जब छात्रों को उनकी योग्यता से पहले <strong>Surname</strong> या पृष्ठभूमि से आँका जाता था।</p>
+                <p>आज जब नई नीतियाँ समान अवसर और पारदर्शिता की बात करती हैं, तो यह समाज में समानता की दिशा में एक कदम है।</p>
+            </div>
+        </section>
+
+        <div class="cta-container">
+            <a href="https://www.effectivegatecpm.com/rdpsc1ap?key=04cfcd1d345b5b9493da19f4320c51ba" class="smart-cta-btn" target="_blank" rel="noopener noreferrer">
+                📢 अधिक जानकारी के लिए यहाँ क्लिक करें (Learn More)
+            </a>
         </div>
-        
-        <div class="input-group">
-            <input type="text" id="username" placeholder="ENTER CODENAME" autocomplete="off">
-        </div>
-        
-        <button id="startBtn" class="btn-start pulse">ENTER ARENA</button>
-    </div>
 
-    <div id="gameScreen" class="screen">
-        <div class="level-badge">LEVEL <span id="levelNum">1</span></div>
-        <div id="egoHint" class="ego-hint">Focus... This one is tricky.</div>
-        <div class="question-box" id="qText">Loading...</div>
-        <div class="options-grid" id="optContainer"></div>
-        <div class="ad-slot-game" style="margin-top:30px;"></div>
-    </div>
+        <article class="card">
+            <h2>UGC के नए दिशा-निर्देश: 'जीवन कौशल'</h2>
+            <div class="article-content">
+                <p>इसी बदलाव की कड़ी में, यूनिवर्सिटी ग्रांट्स कमीशन (UGC) ने उच्च शिक्षा संस्थानों के लिए नए दिशा-निर्देश जारी किए हैं। इनका उद्देश्य छात्रों में केवल अकादमिक ज्ञान नहीं, बल्कि जीवन जीने की कला (Life Skills) विकसित करना है।</p>
+                
+                <div class="highlight-box">
+                    <h3>🔍 मुख्य उद्देश्य:</h3>
+                    <ul>
+                        <li><strong>जीवन कौशल 2.0:</strong> टीम वर्क, संचार और भावनात्मक संतुलन।</li>
+                        <li><strong>आत्म-संयम:</strong> ऊर्जा केंद्रित करने के लिए अनुशासन।</li>
+                        <li><strong>संवैधानिक आधार:</strong> अनुच्छेद 51A का पालन।</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
 
-    <div id="successModal" class="modal">
-        <div class="modal-content" style="border-color: var(--neon-green);">
-            <h2 class="title-success">CORRECT! ✅</h2>
-            <p id="successMsg" style="color:#ddd; margin-bottom: 20px;">Logic sahi tha! 😎</p>
-            <div id="modal-ad-slot" style="margin: 15px auto;"></div>
-            <button class="btn-main" onclick="nextLevel()">Next Level 🚀</button>
-        </div>
-    </div>
+        <section class="card poll-container" id="pollSection">
+            <div class="poll-question">क्या ये दिशा-निर्देश लागू होने चाहिए?</div>
+            
+            <div class="poll-options" id="pollOptions">
+                <button class="btn-vote btn-yes" onclick="submitVote('yes')">👍 हाँ, लागू करें</button>
+                <button class="btn-vote btn-no" onclick="submitVote('no')">👎 नहीं, रहने दें</button>
+            </div>
 
-    <div id="failModal" class="modal">
-        <div class="modal-content" style="border-color: var(--neon-red);">
-            <h2 class="title-fail">FAILED ❌</h2>
-            <p id="failMsg" style="color:#ddd; margin-bottom: 20px;">Overconfidence le dooba? 😏</p>
-            <div class="ad-slot-modal" style="margin: 15px auto;"></div>
-            <button class="btn-main" onclick="retryLevel()">Retry Level</button>
-        </div>
-    </div>
+            <div class="poll-results" id="pollResults">
+                <div class="bar-container">
+                    <div class="bar-label"><span>हाँ (समर्थन में)</span><span id="yes-percent">0%</span></div>
+                    <div class="progress-track"><div class="progress-fill" id="yes-bar" style="background-color: var(--success-color);"></div></div>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-label"><span>नहीं (विरोध में)</span><span id="no-percent">0%</span></div>
+                    <div class="progress-track"><div class="progress-fill" id="no-bar" style="background-color: var(--danger-color);"></div></div>
+                </div>
+                <p style="font-size: 0.8rem; color: #999; margin-top: 10px;">कुल वोट: <span id="total-votes">0</span></p>
+            </div>
+        </section>
 
-    <div id="revengeModal" class="modal">
-        <div class="modal-content" style="border-color: #ff4500; box-shadow: 0 0 30px rgba(255, 69, 0, 0.3);">
-            <h2 class="title-revenge" style="color:#ff4500; font-size:1.8rem;">🔥 REVENGE MODE</h2>
-            <p style="color:white; margin-bottom:10px;">Kismat kharab thi ya sawal hard? 🤔</p>
-            <p style="color:#aaa; font-size:0.9rem;">Ek galti maaf... <br><span style="color:#ff4500; font-weight:bold;">New Question Loading...</span></p>
-            <button class="btn-main" style="background:#ff4500; color:white;" onclick="activateRevenge()">BRING IT ON! ⚔️</button>
-        </div>
+        <section class="card ad-native-container">
+            <script async="async" data-cfasync="false" src="https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js"></script>
+            <div id="container-ed0499a255f96083e92a9524840692b6"></div>
+        </section>
+
+        <section class="card discussion-area">
+            <h2 style="font-size: 1.1rem; margin-bottom: 15px;">🗣️ पब्लिक ओपिनियन</h2>
+            
+            <div class="comment-form">
+                <div class="form-group"><input type="text" id="userName" placeholder="आपका नाम" required></div>
+                <div class="form-group"><textarea id="userComment" rows="2" placeholder="अपनी राय लिखें..." required></textarea></div>
+                <button class="btn-submit" id="submitCommentBtn" onclick="addComment()" disabled>पोस्ट करें (वोट आवश्यक)</button>
+            </div>
+
+            <div id="commentsList"></div>
+        </section>
+
     </div>
 
     <script>
-        // --- 1. GLOBAL SCOPE GAME START LOGIC ---
-        window.state = { level: 0, streak: 0, failsInLevel: 0, name: "" };
+        const smartLinkURL = "https://www.effectivegatecpm.com/rdpsc1ap?key=04cfcd1d345b5b9493da19f4320c51ba";
 
-        window.enterGame = function(e) {
-            // Prevent ghost clicks if called via touchstart
-            if (e && e.cancelable) e.preventDefault();
-            
-            console.log("Enter Game Triggered via " + (e ? e.type : "manual"));
-            
-            let n = document.getElementById('username').value;
-            if(!n) { 
-                let input = document.getElementById('username');
-                input.style.borderBottom = "2px solid red";
-                input.focus();
-                setTimeout(() => input.style.borderBottom = "2px solid #333", 500);
-                return; 
-            }
-            
-            state.name = n;
-            document.getElementById('entryScreen').classList.remove('active');
-            document.getElementById('gameScreen').classList.add('active');
-            
-            if(typeof startGhostCompetitor === 'function') startGhostCompetitor();
-            loadLevel(true);
-        };
-
-        // --- 2. EVENT BINDING (MOBILE FIX) ---
         document.addEventListener("DOMContentLoaded", function() {
-            const startBtn = document.getElementById("startBtn");
-            const inputField = document.getElementById("username");
-
-            if(startBtn) {
-                // Bind both click and touchstart for instant mobile response
-                startBtn.addEventListener("click", window.enterGame);
-                startBtn.addEventListener("touchstart", window.enterGame, { passive: false });
-            }
-
-            if(inputField) {
-                inputField.addEventListener("keypress", function(event) {
-                    if (event.key === "Enter") {
-                        event.preventDefault();
-                        window.enterGame();
+            // --- ✅ 3.1) EXIT INTENT LOGIC (For Desktop) ---
+            // जब माउस ऊपर की तरफ जाए (Window Close करने के लिए), तब Smartlink Trigger करें
+            let exitIntentTriggered = false;
+            document.addEventListener('mouseleave', e => {
+                if (e.clientY < 0 && !exitIntentTriggered) {
+                    exitIntentTriggered = true;
+                    // Note: Modern browsers block window.open without direct click.
+                    // This is a "Best Effort" attempt for exit intent.
+                    // A better UX is to highlight the CTA button.
+                    const ctaBtn = document.querySelector('.smart-cta-btn');
+                    if(ctaBtn) {
+                        ctaBtn.style.transform = "scale(1.1)";
+                        ctaBtn.style.boxShadow = "0 0 15px rgba(255, 152, 0, 0.8)";
                     }
-                });
-            }
+                }
+            });
+
+            // --- Poll & Comments Loading ---
+            loadPollResults();
+            loadComments();
+            checkUserVoteStatus();
         });
 
-        // --- 3. ADSTERRA DYNAMIC LOADING (SAFE) ---
-        let adsAllowed = false; 
-        function initAdNetwork() {
-            if (adsAllowed) return; 
-            adsAllowed = true;
-            
-            // Create Wrapper Dynamically
-            let wrapper = document.createElement('div');
-            wrapper.id = 'adsterra-native-wrapper';
-            wrapper.style.cssText = "width: 100%; max-width: 350px; min-height: 100px; margin: 10px auto; text-align: center; display: flex; justify-content: center; align-items: center; background: rgba(255, 255, 255, 0.02); border-radius: 8px; padding: 5px;";
-            
-            // Popunder
-            let popScript = document.createElement('script');
-            popScript.src = "https://pl28323070.effectivegatecpm.com/33/31/f0/3331f0bf593df358f60b72a1918fb61c.js";
-            document.head.appendChild(popScript);
-            
-            // Native Banner
-            let bannerScript = document.createElement('script');
-            bannerScript.src = "https://pl28323063.effectivegatecpm.com/ed0499a255f96083e92a9524840692b6/invoke.js";
-            bannerScript.setAttribute('async', 'async');
-            bannerScript.setAttribute('data-cfasync', 'false');
-            let bannerDiv = document.createElement('div');
-            bannerDiv.id = "container-ed0499a255f96083e92a9524840692b6";
-            
-            wrapper.appendChild(bannerScript);
-            wrapper.appendChild(bannerDiv);
-            document.getElementById('ad-container-root').appendChild(wrapper);
+        // --- POLL SYSTEM LOGIC ---
+        const defaultVotes = { yes: 342, no: 89 };
+
+        function submitVote(choice) {
+            let votes = JSON.parse(localStorage.getItem('pollVotes')) || defaultVotes;
+            votes[choice]++;
+            localStorage.setItem('pollVotes', JSON.stringify(votes));
+            localStorage.setItem('userHasVoted', 'true');
+            localStorage.setItem('userChoice', choice);
+            updateUIForVotedUser();
         }
 
-        function moveAdTo(targetSelector) {
-            if (!adsAllowed) return; 
-            const target = document.querySelector(targetSelector);
-            const wrapper = document.getElementById('adsterra-native-wrapper');
-            if(target && wrapper) target.appendChild(wrapper);
+        function checkUserVoteStatus() {
+            if (localStorage.getItem('userHasVoted') === 'true') { updateUIForVotedUser(); }
         }
 
-        // --- 4. GAME DATA & FUNCTIONS ---
-        const messages = {
-            success: ["Lagta hai dimaag sahi direction mein hai 😎", "Ab samajh aaya kyu aaye ho yahan 🧠", "Tukka tha ya talent? Jo bhi ho, sahi hai 🔥"],
-            fail: ["Bas? Itni jaldi hawa nikal gayi? 🎈", "Retry karo... izzat abhi bachi hai 💯", "Google karne ka time nahi mila? 😂"],
-            ghost: ["Rohit just cleared this level 🚀", "Amit is now on Level 10 😈", "Priya is catching up fast 🔥"],
-            hints: ["Focus... This one is not easy.", "Confidence ya guess? Soch lo.", "Legends think before tapping.", "Galti ki gunjaish nahi hai."]
-        };
+        function updateUIForVotedUser() {
+            document.getElementById('pollOptions').style.display = 'none';
+            document.getElementById('pollResults').style.display = 'block';
+            
+            const btn = document.getElementById('submitCommentBtn');
+            btn.disabled = false;
+            btn.innerText = "टिप्पणी पोस्ट करें";
 
-        let activeQuestions = [
-            { q: "Bharat ki Rajdhani?", a: ["Mumbai", "Delhi", "Kolkata", "Pune"], c: 1 },
-            { q: "Samosa shape?", a: ["Circle", "Square", "Triangle", "Line"], c: 2 },
-            { q: "Heavier: 1kg Iron vs 1kg Cotton?", a: ["Iron", "Cotton", "Equal", "Brain"], c: 2 },
-            { q: "Sun rises from?", a: ["West", "North", "East", "South"], c: 2 },
-            { q: "Water peete hi jo mar jaye?", a: ["Fish", "Thirst", "Cat", "Human"], c: 1 },
-            { q: "Binary for 5?", a: ["101", "110", "111", "100"], c: 0 },
-            { q: "2nd ko cross kiya to tum kya ho?", a: ["1st", "2nd", "3rd", "Last"], c: 1 },
-            { q: "Month with 28 days?", a: ["Feb", "Dec", "Jan", "All"], c: 3 },
-            { q: "After E in English?", a: ["F", "D", "N", "G"], c: 2 },
-            { q: "Kal se pehle aaj tha?", a: ["No", "Yes", "Maybe", "Logic"], c: 0 }
-        ];
+            let votes = JSON.parse(localStorage.getItem('pollVotes')) || defaultVotes;
+            let total = votes.yes + votes.no;
+            let yesPer = Math.round((votes.yes / total) * 100);
+            let noPer = Math.round((votes.no / total) * 100);
 
-        while(activeQuestions.length < 30) {
-            activeQuestions.push({ q: "Hidden Logic Level #" + (activeQuestions.length + 1), a: ["A", "B", "C", "D"], c: 0 });
+            setTimeout(() => {
+                document.getElementById('yes-bar').style.width = yesPer + '%';
+                document.getElementById('no-bar').style.width = noPer + '%';
+            }, 50);
+
+            document.getElementById('yes-percent').innerText = yesPer + '%';
+            document.getElementById('no-percent').innerText = noPer + '%';
+            document.getElementById('total-votes').innerText = total;
         }
 
-        let reserveQuestions = [
-            { q: "Revenge: 2 + 2 x 2?", a: ["6", "8", "4", "10"], c: 0 },
-            { q: "Revenge: Capital of Japan?", a: ["Beijing", "Seoul", "Tokyo", "Bangkok"], c: 2 },
-            { q: "Revenge: King of Jungle?", a: ["Tiger", "Lion", "Elephant", "Human"], c: 1 },
-            { q: "Revenge: H2O is?", a: ["Gold", "Silver", "Water", "Air"], c: 2 },
-            { q: "Revenge: Colors in Rainbow?", a: ["5", "7", "9", "10"], c: 1 },
-            { q: "Revenge: Fastest land animal?", a: ["Cheetah", "Horse", "Lion", "Rabbit"], c: 0 },
-            { q: "Revenge: 5 x 5 + 5?", a: ["30", "55", "25", "50"], c: 0 },
-            { q: "Revenge: Opposite of Cold?", a: ["Ice", "Hot", "Water", "Wind"], c: 1 }
-        ];
+        function loadPollResults() {
+            if (!localStorage.getItem('pollVotes')) { localStorage.setItem('pollVotes', JSON.stringify(defaultVotes)); }
+        }
 
-        function loadLevel(first = false) {
-            if(state.level >= activeQuestions.length) return alert("YOU WON! GOD LEVEL UNLOCKED 🏆");
+        // --- COMMENT SYSTEM LOGIC ---
+        function addComment() {
+            const name = document.getElementById('userName').value;
+            const text = document.getElementById('userComment').value;
+            const userVote = localStorage.getItem('userChoice');
 
-            if (state.level >= 2 && !adsAllowed) {
-                initAdNetwork();
+            if (!name.trim() || !text.trim()) { alert("कृपया नाम और संदेश लिखें।"); return; }
+
+            const newComment = { name: name, text: text, vote: userVote, time: "अभी" };
+            let comments = JSON.parse(localStorage.getItem('siteComments')) || [];
+            comments.unshift(newComment);
+            localStorage.setItem('siteComments', JSON.stringify(comments));
+
+            document.getElementById('userName').value = "";
+            document.getElementById('userComment').value = "";
+            renderComment(newComment, true);
+        }
+
+        function loadComments() {
+            if (!localStorage.getItem('siteComments')) {
+                const dummyComments = [
+                    { name: "रजत शर्मा", text: "संविधान और संस्कृति दोनों का सम्मान जरुरी है।", vote: "yes" },
+                    { name: "अमित", text: "विचार अच्छा है, पर लागू करना कठिन होगा।", vote: "no" }
+                ];
+                localStorage.setItem('siteComments', JSON.stringify(dummyComments));
             }
+            let comments = JSON.parse(localStorage.getItem('siteComments'));
+            document.getElementById('commentsList').innerHTML = '';
+            comments.forEach(comment => renderComment(comment, false));
+        }
 
-            let q = activeQuestions[state.level];
-            document.getElementById('levelNum').innerText = state.level + 1;
-            document.getElementById('progressBar').style.width = ((state.level / activeQuestions.length) * 100) + "%";
+        function renderComment(data, animate) {
+            const list = document.getElementById('commentsList');
+            const badgeClass = data.vote === 'yes' ? 'badge-yes' : 'badge-no';
+            const badgeText = data.vote === 'yes' ? 'समर्थक' : 'विरोधी';
+            const initial = data.name.charAt(0).toUpperCase();
+
+            const html = `
+                <div class="comment-card" style="${animate ? 'animation: fadeIn 0.5s' : ''}">
+                    <div class="avatar">${initial}</div>
+                    <div class="comment-body">
+                        <div class="comment-header">
+                            <div>
+                                <span class="user-name">${data.name}</span>
+                                <span class="vote-badge ${badgeClass}">${badgeText}</span>
+                            </div>
+                        </div>
+                        <div class="comment-text">${data.text}</div>
+                    </div>
+                </div>`;
             
-            let qBox = document.getElementById('qText');
-            let oBox = document.getElementById('optContainer');
-            let hintEl = document.getElementById('egoHint');
-
-            qBox.classList.remove('slide-up');
-            void qBox.offsetWidth;
-            qBox.classList.add('slide-up');
-            qBox.innerText = q.q;
-
-            let randomHint = messages.hints[Math.floor(Math.random() * messages.hints.length)];
-            hintEl.style.opacity = 0;
-            setTimeout(() => { hintEl.innerText = randomHint; hintEl.style.opacity = 1; }, 200);
-
-            oBox.innerHTML = "";
-            q.a.forEach((opt, i) => {
-                let btn = document.createElement('div');
-                btn.className = 'opt-btn slide-up';
-                btn.style.animationDelay = (i * 0.1) + 's';
-                btn.innerText = opt;
-                btn.onclick = (e) => checkAnswer(i, e.target);
-                // Also add touchstart for fast response on options
-                btn.ontouchstart = (e) => { e.preventDefault(); checkAnswer(i, e.target); };
-                oBox.appendChild(btn);
-            });
-            
-            if (adsAllowed) moveAdTo('#gameScreen .ad-slot-game');
+            if (animate) { list.insertAdjacentHTML('afterbegin', html); } 
+            else { list.innerHTML += html; }
         }
-
-        function checkAnswer(idx, btnElement) {
-            let q = activeQuestions[state.level];
-            if(idx === q.c) {
-                if(btnElement) {
-                    btnElement.style.border = "1px solid #00ff99";
-                    btnElement.style.background = "rgba(0,255,153,0.2)";
-                }
-                state.streak++;
-                state.failsInLevel = 0;
-                updateStreakUI();
-                setTimeout(() => showSuccess(), 300);
-            } else {
-                if(btnElement) {
-                    btnElement.style.border = "1px solid #ff0055";
-                    btnElement.style.background = "rgba(255,0,85,0.2)";
-                }
-                state.streak = 0;
-                state.failsInLevel++;
-                updateStreakUI();
-                setTimeout(() => {
-                    if(state.failsInLevel >= 3) showRevengeModal();
-                    else showFail();
-                }, 400);
-            }
-        }
-
-        function showRevengeModal() {
-            document.getElementById('failModal').style.display = 'none';
-            document.getElementById('revengeModal').style.display = 'flex';
-        }
-
-        function activateRevenge() {
-            document.getElementById('revengeModal').style.display = 'none';
-            if(reserveQuestions.length > 0) {
-                let randomIndex = Math.floor(Math.random() * reserveQuestions.length);
-                let newQ = reserveQuestions[randomIndex];
-                reserveQuestions.splice(randomIndex, 1);
-                activeQuestions[state.level] = newQ;
-                state.failsInLevel = 0; 
-                setTimeout(() => { loadLevel(); showGhostNotify("⚠️ New Question Loaded! Good Luck."); }, 200);
-            } else {
-                alert("No more revenge questions! 😈");
-                loadLevel();
-            }
-        }
-
-        function showSuccess() {
-            let msg = messages.success[Math.floor(Math.random() * messages.success.length)];
-            document.getElementById('successMsg').innerText = `"${msg}"`;
-           
+    </script>
+</body>
+</html>
